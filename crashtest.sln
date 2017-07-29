@@ -1,7 +1,8 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "crashtest", "crashtest.csproj", "{68CC4A1C-1519-5C46-244C-17FB1EE7476A}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{FADA023F-5F16-B77B-1A63-A41871D30B95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor-firstpass", "Assembly-CSharp-Editor-firstpass.csproj", "{920A7EF4-770B-0BEA-B32B-58B361F6816C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,12 +10,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{68CC4A1C-1519-5C46-244C-17FB1EE7476A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68CC4A1C-1519-5C46-244C-17FB1EE7476A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68CC4A1C-1519-5C46-244C-17FB1EE7476A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68CC4A1C-1519-5C46-244C-17FB1EE7476A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FADA023F-5F16-B77B-1A63-A41871D30B95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FADA023F-5F16-B77B-1A63-A41871D30B95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FADA023F-5F16-B77B-1A63-A41871D30B95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FADA023F-5F16-B77B-1A63-A41871D30B95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{920A7EF4-770B-0BEA-B32B-58B361F6816C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{920A7EF4-770B-0BEA-B32B-58B361F6816C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{920A7EF4-770B-0BEA-B32B-58B361F6816C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{920A7EF4-770B-0BEA-B32B-58B361F6816C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal
