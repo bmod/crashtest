@@ -46,6 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\MiteDeath.cs" />
+     <Compile Include="Assets\MiteSeeking.cs" />
      <Compile Include="Assets\PowerRunningOut.cs" />
      <Compile Include="Assets\Scripts\HashFunctions\HashFunction.cs" />
      <Compile Include="Assets\Scripts\HashFunctions\MurmurHash.cs" />
