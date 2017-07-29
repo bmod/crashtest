@@ -17,6 +17,8 @@ public class PlayerControls : MonoBehaviour {
 	[SerializeField]
 	Transform boosterRotator;
 
+	public Transform astronaut;
+
 
 	public ParticleSystem boosterParticles;
 
@@ -120,6 +122,16 @@ public class PlayerControls : MonoBehaviour {
 		if (Input.GetKey (rotateGunCounterClockWise)) {
 			//			Debug.Log ("rotattng!");
 			gunRotator.Rotate (new Vector3 (0f, 0f, Time.deltaTime * gunRotationSpeed));
+		}
+	}
+
+	public static PlayerControls instance;
+	void Awake() {
+		if (instance != null) {
+			Debug.LogError ("Warning: had to destroy an extraneous instance of player controls.");
+			Destroy (this);
+		} else {
+			instance = this;
 		}
 	}
 }
