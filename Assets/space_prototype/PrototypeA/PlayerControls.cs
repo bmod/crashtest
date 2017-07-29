@@ -40,12 +40,13 @@ public class PlayerControls : MonoBehaviour {
 
 	bool cooling = false;
 	float cooldown = .2f;
+	public float bulletSpeed = 7f;
 	void Shoot() {
 		if (cooling)
 			return;
 		GameObject shot = Instantiate (missilePrefab);
 		shot.transform.position = barrelOpening.position;
-		Vector3 launchVel = UnitForward2DFromTransform (gunRotator) * 5f;
+		Vector3 launchVel = UnitForward2DFromTransform (gunRotator) * bulletSpeed;
 		Vector3 starting = shot.GetComponent<Rigidbody2D> ().velocity;
 		shot.GetComponent<Rigidbody2D> ().velocity =  launchVel + starting;
 		StartCoroutine (Cooldown ());
@@ -69,9 +70,10 @@ public class PlayerControls : MonoBehaviour {
 
 
 	public Rigidbody2D boosterRigidbody;
+	public float boosterForceMagnitude = 8f;
 	void CheckForBoost() {
 		if (Input.GetKey (boosterKey)) {
-			Vector3 force = UnitForward2DFromTransform (boosterRotator) * 8f;
+			Vector3 force = UnitForward2DFromTransform (boosterRotator) * boosterForceMagnitude;
 			boosterRigidbody.AddForce (new Vector2 (force.x, force.y));
 		}
 	}

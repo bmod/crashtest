@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\IKChain.cs" />
      <Compile Include="Assets\Scripts\StickyController.cs" />
      <Compile Include="Assets\Scripts\TPCamera.cs" />
+     <Compile Include="Assets\Stars.cs" />
      <Compile Include="Assets\TestScript.cs" />
      <Compile Include="Assets\space_prototype\PrototypeA\CameraFollowing.cs" />
      <Compile Include="Assets\space_prototype\PrototypeA\PlayerControls.cs" />
