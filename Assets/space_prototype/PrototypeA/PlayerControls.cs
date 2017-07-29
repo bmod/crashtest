@@ -21,7 +21,7 @@ public class PlayerControls : MonoBehaviour {
 	KeyCode gunShotKey = KeyCode.UpArrow;
 	public Transform barrelOpening;
 	KeyCode boosterKey = KeyCode.W;
-	
+
 	// Update is called once per frame
 	void Update () {
 		CheckForBoosterRotation ();
@@ -66,11 +66,11 @@ public class PlayerControls : MonoBehaviour {
 	}
 
 
-
+	public Rigidbody2D boosterRigidbody;
 	void CheckForBoost() {
 		if (Input.GetKey (boosterKey)) {
 			Vector3 force = UnitForward2DFromTransform (boosterRotator) * 5f;
-			GetComponent<Rigidbody2D> ().AddForce (new Vector2 (force.x, force.y));
+			boosterRigidbody.AddForce (new Vector2 (force.x, force.y));
 		}
 	}
 
