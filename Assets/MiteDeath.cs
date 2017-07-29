@@ -15,7 +15,7 @@ public class MiteDeath : MonoBehaviour {
 		GetComponent<Damageable> ().OnKilled -= BlowUpOnKilled;
 	}
 
-	void BlowUpOnKilled(Missile source) {
+	void BlowUpOnKilled(DamageSource source) {
 		Destroy (gameObject);
 	}
 

@@ -2,7 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MiteSeeking : MonoBehaviour {
+
+//Just so there's commonality between missiles/etc...
+public interface DamageSource {
+	
+}
+
+public class MiteSeeking : MonoBehaviour, DamageSource {
 	
 
 	public float distanceToChangeToAttacking = 2f;
@@ -33,6 +39,17 @@ public class MiteSeeking : MonoBehaviour {
 		bool inr = distanceToChangeToAttacking * distanceToChangeToAttacking >
 		(PlayerControls.instance.astronaut.position - transform.position).sqrMagnitude;
 		return inr;
+	}
+
+	public void CheckForOverlapAndDamagePlayer() {
+		Collider2D player = PlayerControls.instance.astronaut.GetComponent<Collider2D> ();
+		if (GetComponent<Collider2D> ().IsTouching (player)) {
+
+			Debug.Log ("damag!");
+			player.GetComponent<Damageable> ().TakeDamage (1, this);
+		} else {
+			Debug.Log ("Not overlaping!");
+		}
 	}
 
 	void Seek() {

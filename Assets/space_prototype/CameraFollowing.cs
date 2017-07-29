@@ -30,7 +30,7 @@ public class CameraFollowing : MonoBehaviour
 	}
 
 	public float shakeMagnitude = .2f;
-	void ShakeOnDamaged(int amount, Missile source) {
+	void ShakeOnDamaged(int amount, DamageSource source) {
 		DoShake (shakeMagnitude, .5f, null);
 	}
 

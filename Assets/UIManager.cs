@@ -42,7 +42,7 @@ public class UIManager : MonoBehaviour {
 		powerRunOut.OnLostPower -= UpdateBarOnPlayerLostPower;
 	}
 
-	void UpdateBarOnPlayerDamaged(int amount, Missile source) {
+	void UpdateBarOnPlayerDamaged(int amount, DamageSource source) {
 		healthBar.rectTransform.sizeDelta = new Vector2 (playerDamageable.HealthRatio * ogHealthbarWidth, healthBar.rectTransform.sizeDelta.y);
 	}
 

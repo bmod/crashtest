@@ -61,6 +61,8 @@
      <Compile Include="Assets\space_prototype\AstronautDeathEffects.cs" />
      <Compile Include="Assets\space_prototype\CameraFollowing.cs" />
      <Compile Include="Assets\space_prototype\Damageable.cs" />
+     <Compile Include="Assets\space_prototype\GameObjectPool.cs" />
+     <Compile Include="Assets\space_prototype\GameObjectPooler.cs" />
      <Compile Include="Assets\space_prototype\Missile.cs" />
      <Compile Include="Assets\space_prototype\PlayerControls.cs" />
      <Compile Include="Assets\space_prototype\PowerUps\PowerUp.cs" />
