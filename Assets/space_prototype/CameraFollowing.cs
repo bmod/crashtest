@@ -37,9 +37,10 @@ public class CameraFollowing : MonoBehaviour
 
 	private Vector3 currentVelocity;
 	// Update is called once per frame
-	void Update () {
-		var targetPos = new Vector3(player.position.x, player.position.y, transform.position.z) + shakingOffset;
-		transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref currentVelocity, SmoothTime);
+	void FixedUpdate () {
+		var targetPos = new Vector3(player.position.x, player.position.y, transform.position.z);
+		var smoothPos = Vector3.SmoothDamp(transform.position, targetPos, ref currentVelocity, SmoothTime);
+		transform.position = smoothPos + shakingOffset;
 	}
 
 

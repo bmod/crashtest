@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 
 internal struct SpawnPoint
@@ -86,13 +85,19 @@ public class RandomSpawnArea : MonoBehaviour
     public float CellSize = 10;
     public int minSpawnPointsInCell = 0;
     public int maxSpawnPointsInCell = 3;
+    public int seed = 100;
 
     private Vector2 _anchor;
     private Rect _liveArea;
-    private readonly HashFunction _rand = new XXHash(0);
+    private HashFunction _rand;
 
     private IntBounds _cellBounds;
     private readonly Dictionary<int, Cell> _cells = new Dictionary<int, Cell>();
+
+    private void Awake()
+    {
+        _rand = new XXHash(seed);
+    }
 
     private void Update()
     {
@@ -110,7 +115,20 @@ public class RandomSpawnArea : MonoBehaviour
 
     private SpawnPoint[] PointsInCell(int x, int y)
     {
-        var pointCount = _rand.Range(minSpawnPointsInCell, maxSpawnPointsInCell, x, y);
+        var pointCount = 0;
+        if (minSpawnPointsInCell == maxSpawnPointsInCell)
+        {
+            pointCount = minSpawnPointsInCell;
+        }
+        else if (maxSpawnPointsInCell < minSpawnPointsInCell)
+        {
+            pointCount = 1;
+        }
+        else
+        {
+            pointCount = _rand.Range(minSpawnPointsInCell, maxSpawnPointsInCell, x, y);
+        }
+        
         var pts = new SpawnPoint[pointCount];
         for (var i = 0; i < pointCount; i++)
         {
