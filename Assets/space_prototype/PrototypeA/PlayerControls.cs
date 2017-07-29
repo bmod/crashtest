@@ -69,7 +69,7 @@ public class PlayerControls : MonoBehaviour {
 	public Rigidbody2D boosterRigidbody;
 	void CheckForBoost() {
 		if (Input.GetKey (boosterKey)) {
-			Vector3 force = UnitForward2DFromTransform (boosterRotator) * 5f;
+			Vector3 force = UnitForward2DFromTransform (boosterRotator) * 8f;
 			boosterRigidbody.AddForce (new Vector2 (force.x, force.y));
 		}
 	}
