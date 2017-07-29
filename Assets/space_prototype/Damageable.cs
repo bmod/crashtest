@@ -28,6 +28,12 @@ public class Damageable : MonoBehaviour {
 		}
 	}
 
+	public void AddHealth(int h)
+	{
+		currentHealth = Mathf.Min(currentHealth+h, maxHealth);
+		print("Omnom!");
+	}
+
 	public float HealthRatio {
 		get {
 			if (currentHealth < 0) {
