@@ -20,6 +20,7 @@ public class AstronautDeathEffects : MonoBehaviour {
 		StartCoroutine (RestartScene ());
 	}
 
+
 	IEnumerator RestartScene() {
 		yield return new WaitForSeconds (2f);
 		SceneManager.LoadScene (0);

@@ -47,7 +47,7 @@ public class PlayerControls : MonoBehaviour {
 		GameObject shot = Instantiate (missilePrefab);
 		shot.transform.position = barrelOpening.position;
 		Vector3 launchVel = UnitForward2DFromTransform (gunRotator) * bulletSpeed;
-		Vector3 starting = shot.GetComponent<Rigidbody2D> ().velocity;
+		Vector3 starting = boosterRigidbody.GetComponent<Rigidbody2D> ().velocity;
 		shot.GetComponent<Rigidbody2D> ().velocity =  launchVel + starting;
 		StartCoroutine (Cooldown ());
 		StartCoroutine (KillBullet (shot));
