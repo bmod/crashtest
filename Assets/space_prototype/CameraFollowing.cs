@@ -33,10 +33,13 @@ public class CameraFollowing : MonoBehaviour {
 	void ShakeOnDamaged(int amount, Missile source) {
 		DoShake (shakeMagnitude, .5f, null);
 	}
-	
+
+
+	private Vector3 currentVelocity;
 	// Update is called once per frame
 	void Update () {
-		transform.position = new Vector3(player.position.x, player.position.y, transform.position.z) + shakingOffset;	
+		var targetPos = new Vector3(player.position.x, player.position.y, transform.position.z) + shakingOffset;
+		transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref currentVelocity, 1);
 	}
 
 
