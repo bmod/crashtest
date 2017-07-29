@@ -47,7 +47,14 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Bone.cs" />
+     <Compile Include="Assets\Scripts\HashFunctions\HashFunction.cs" />
+     <Compile Include="Assets\Scripts\HashFunctions\MurmurHash.cs" />
+     <Compile Include="Assets\Scripts\HashFunctions\PcgHash.cs" />
+     <Compile Include="Assets\Scripts\HashFunctions\WangDoubleHash.cs" />
+     <Compile Include="Assets\Scripts\HashFunctions\WangHash.cs" />
+     <Compile Include="Assets\Scripts\HashFunctions\XXHash.cs" />
      <Compile Include="Assets\Scripts\IKChain.cs" />
+     <Compile Include="Assets\Scripts\RandomSpawnArea.cs" />
      <Compile Include="Assets\Scripts\StickyController.cs" />
      <Compile Include="Assets\Scripts\TPCamera.cs" />
      <Compile Include="Assets\Stars.cs" />
