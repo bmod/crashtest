@@ -28,6 +28,17 @@ public class Damageable : MonoBehaviour {
 		}
 	}
 
+	public float HealthRatio {
+		get {
+			if (currentHealth < 0) {
+				return 0f;
+
+			}
+
+			return currentHealth / (float) maxHealth;
+		}
+	}
+
 	public delegate void DamageTakenAction(int amount, Missile source);
 	public event DamageTakenAction OnDamageTaken;
 
