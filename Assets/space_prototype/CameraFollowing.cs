@@ -1,10 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFollowing : MonoBehaviour {
+public class CameraFollowing : MonoBehaviour
+{
 
-
+	public float SmoothTime = 0.3f;
 	public Transform player;
 
 	public Damageable playerDamageable;
@@ -39,7 +39,7 @@ public class CameraFollowing : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		var targetPos = new Vector3(player.position.x, player.position.y, transform.position.z) + shakingOffset;
-		transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref currentVelocity, 1);
+		transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref currentVelocity, SmoothTime);
 	}
 
 
