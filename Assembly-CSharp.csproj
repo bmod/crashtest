@@ -46,6 +46,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\AstronautDeathEffects.cs" />
+     <Compile Include="Assets\Damageable.cs" />
+     <Compile Include="Assets\Missile.cs" />
      <Compile Include="Assets\Scripts\Bone.cs" />
      <Compile Include="Assets\Scripts\IKChain.cs" />
      <Compile Include="Assets\Scripts\StickyController.cs" />
