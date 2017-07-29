@@ -126,8 +126,10 @@ public class RandomSpawnArea : MonoBehaviour
         sp.Pt = new Vector2(_rand.Value(x, y + 100 * i), _rand.Value(x + 200 * i, y));
         sp.instance = Instantiate(go);
         sp.instance.transform.position = sp.Pt * CellSize + new Vector2(x, y) * CellSize;
-//        sp.instance.transform.Rotate(Vector3.forward * _rand.Range(0, 3, x + 30, y) * 90);
-        sp.instance.transform.Rotate(Vector3.forward * _rand.Range(0, 360, x + 30, y + i));
+        // Offset in depth
+        sp.instance.transform.position += new Vector3(0, 0, transform.position.z);
+        sp.instance.transform.Rotate(Vector3.forward * _rand.Range(0, 3, x + 30, y) * 90);
+//        sp.instance.transform.Rotate(Vector3.forward * _rand.Range(0, 360, x + 30, y + i));
         sp.Index = i;
         return sp;
     }
