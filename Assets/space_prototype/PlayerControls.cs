@@ -18,6 +18,8 @@ public class PlayerControls : MonoBehaviour {
 	Transform boosterRotator;
 
 
+	public ParticleSystem boosterParticles;
+
 	KeyCode gunShotKey = KeyCode.UpArrow;
 	public Transform barrelOpening;
 	KeyCode boosterKey = KeyCode.W;
@@ -68,14 +70,30 @@ public class PlayerControls : MonoBehaviour {
 		return fwd;
 	}
 
+	void Start() {
+		particleEmission = boosterParticles.emission;
+	}
+
 
 	public Rigidbody2D boosterRigidbody;
+	ParticleSystem.EmissionModule particleEmission;
 	public float boosterForceMagnitude = 8f;
+	bool boosting = false;
 	void CheckForBoost() {
 		if (Input.GetKey (boosterKey)) {
+			boosting = true;
 			Vector3 force = UnitForward2DFromTransform (boosterRotator) * boosterForceMagnitude;
 			boosterRigidbody.AddForce (new Vector2 (force.x, force.y));
+		} else {
+			boosting = false;
 		}
+
+		if (boosting) {
+			particleEmission.enabled = true;
+		} else {
+			particleEmission.enabled = false;
+		}
+			
 	}
 
 	void CheckForBoosterRotation() {

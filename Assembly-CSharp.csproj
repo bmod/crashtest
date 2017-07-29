@@ -46,6 +46,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
+=======
+     <Compile Include="Assets\PowerRunningOut.cs" />
+>>>>>>> origin/master
      <Compile Include="Assets\Scripts\HashFunctions\HashFunction.cs" />
      <Compile Include="Assets\Scripts\HashFunctions\MurmurHash.cs" />
      <Compile Include="Assets\Scripts\HashFunctions\PcgHash.cs" />
