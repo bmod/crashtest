@@ -20,8 +20,14 @@ public class UIManager : MonoBehaviour {
 	void Start () {
 		power = maxPower;
 
-		playerDamageable = GameObject.Find ("SpaceMan").GetComponent<Damageable>();
-		playerDamageable.OnDamageTaken += UpdateBarOnPlayerDamaged;
+		GameObject go = GameObject.Find ("SpaceMan");
+		if (go != null) {
+			playerDamageable = go.GetComponent<Damageable> ();
+			playerDamageable.OnDamageTaken += UpdateBarOnPlayerDamaged;
+		} else {
+			Debug.LogError ("Couldn't find the SpaceMan object in camera");
+		}
+
 
 		ogHealthbarWidth = healthBar.rectTransform.sizeDelta.x;
 		ogPowerbarWidth = powerBar.rectTransform.sizeDelta.x;
