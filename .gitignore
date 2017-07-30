@@ -65,3 +65,9 @@ sysinfo.txt
 *.apk
 
 *.unitypackage
+/crashtest.Editor.Plugins.csproj
+/Assembly-CSharp.csproj
+/Assembly-CSharp-Editor-firstpass.csproj
+/crashtest.csproj
+/crashtest.userprefs
+/crashtest.sln

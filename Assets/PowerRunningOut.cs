@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +13,11 @@ public class PowerRunningOut : MonoBehaviour {
 
 		power = maxPower;
 		StartCoroutine (DecreasePower());
+	}
+
+	public void AddPower(float amount)
+	{
+		power = Mathf.Min(power + amount, maxPower);
 	}
 
 	IEnumerator DecreasePower() {

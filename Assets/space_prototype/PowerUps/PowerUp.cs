@@ -17,6 +17,11 @@ public class PowerUp : MonoBehaviour
         switch (type)
         {
             case Type.Battery:
+                if (other.gameObject.name != "Drone")
+                    return;
+                var pow = other.gameObject.transform.parent.GetComponentInChildren<PowerRunningOut>();
+                pow.AddPower(amount);
+                Destroy(gameObject);
                 break;
             case Type.Health:
                 var damageable = other.GetComponent<Damageable>();
