@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class StarfieldScript : MonoBehaviour {
 
-    public int numOfStarsLayer1 = 50;
-    public int numOfStarsLayer2 = 60;
-    public int numOfStarsLayer3 = 70;
+    public int numOfStarsLayer1 = 30;
+    public int numOfStarsLayer2 = 70;
+    public int numOfStarsLayer3 = 100;
     public int starfieldHeight = 20;
     public int starfieldWidth = 30;
     public float layer1Speed = 0.1f;
     public float layer2Speed = 0.05f;
-    public float layer3Speed = 0.01f;
+    public float layer3Speed = 0.001f;
     public int starTimeout = 1;
     public float rangeLow = -1.0f;
     public float rangeHigh = 1.0f;
@@ -46,8 +46,9 @@ public class StarfieldScript : MonoBehaviour {
         layer2 = new List<GameObject>();
         layer3 = new List<GameObject>();
 
-        //layer1 initial starfield generation
         float totalArea = starfieldWidth * starfieldHeight;
+
+        //layer1 initial starfield generation
         float starArea = totalArea / numOfStarsLayer1;
         float length = Mathf.Sqrt(starArea);
 
@@ -57,12 +58,14 @@ public class StarfieldScript : MonoBehaviour {
             {
                 obj = starPool.GetPooledObject();
                 obj.transform.position = new Vector2(i+Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
+                float randScale = Random.Range(0.25f, 1);
+                obj.transform.localScale = new Vector3(randScale, randScale, randScale);
                 obj.SetActive(true);
                 layer1.Add(obj);
             }
         }
 
-        starArea = totalArea / numOfStarsLayer1;
+        starArea = totalArea / numOfStarsLayer2;
         length = Mathf.Sqrt(starArea);
         //layer2 initial starfield generation
         for (float i = length / 2; i < starfieldWidth; i += length)
@@ -71,21 +74,24 @@ public class StarfieldScript : MonoBehaviour {
             {
                 obj = starPool.GetPooledObject();
                 obj.transform.position = new Vector2(i + Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
+                float randScale = Random.Range(0.25f, 1);
+                obj.transform.localScale = new Vector3(randScale, randScale, randScale);
                 obj.SetActive(true);
                 layer2.Add(obj);
             }
         }
 
         //layer3 initial starfield generation
-        starArea = totalArea / numOfStarsLayer1;
+        starArea = totalArea / numOfStarsLayer3;
         length = Mathf.Sqrt(starArea);
-        //layer2 initial starfield generation
         for (float i = length / 2; i < starfieldWidth; i += length)
         {
             for (float j = length / 2; j < starfieldHeight; j += length)
             {
                 obj = starPool.GetPooledObject();
                 obj.transform.position = new Vector2(i + Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
+                float randScale = Random.Range(0.25f, 1);
+                obj.transform.localScale = new Vector3(randScale, randScale, randScale);
                 obj.SetActive(true);
                 layer3.Add(obj);
             }
@@ -173,8 +179,65 @@ public class StarfieldScript : MonoBehaviour {
         while (layer1.Count < numOfStarsLayer1)
         {
             GameObject obj;
+            Vector2 dirNormal;
             obj = starPool.GetPooledObject();
-            obj.transform.position = player.transform.position;
+            dirNormal = player.GetComponent<Rigidbody2D>().velocity.normalized;
+            if(dirNormal.x > 0)
+            {
+                if(dirNormal.y > 0)
+                {
+                    //top right
+                    if(Random.value < 0.5f)
+                    {
+                        obj.transform.position = new Vector2(Random.Range(starfieldRect.xMin, starfieldRect.xMax), starfieldRect.yMax);
+                    }
+                    else
+                    {
+                        obj.transform.position = new Vector2(starfieldRect.xMax, Random.Range(starfieldRect.yMin, starfieldRect.yMax));
+                    }
+                }
+                else
+                {
+                    //bottom right
+                    if (Random.value < 0.5f)
+                    {
+                        obj.transform.position = new Vector2(Random.Range(starfieldRect.xMin, starfieldRect.xMax), starfieldRect.yMin);
+                    }
+                    else
+                    {
+                        obj.transform.position = new Vector2(starfieldRect.xMax, Random.Range(starfieldRect.yMin, starfieldRect.yMax));
+                    }
+                }
+            }
+            else
+            {
+                if (dirNormal.y > 0)
+                {
+                    //top left
+                    if (Random.value < 0.5f)
+                    {
+                        obj.transform.position = new Vector2(Random.Range(starfieldRect.xMin, starfieldRect.xMax), starfieldRect.yMax);
+                    }
+                    else
+                    {
+                        obj.transform.position = new Vector2(starfieldRect.xMin, Random.Range(starfieldRect.yMin, starfieldRect.yMax));
+                    }
+                }
+                else
+                {
+                    //bottom left
+                    if (Random.value < 0.5f)
+                    {
+                        obj.transform.position = new Vector2(Random.Range(starfieldRect.xMin, starfieldRect.xMax), starfieldRect.yMin);
+                    }
+                    else
+                    {
+                        obj.transform.position = new Vector2(starfieldRect.xMin, Random.Range(starfieldRect.yMin, starfieldRect.yMax));
+                    }
+                }
+            }
+            float randScale = Random.Range(0.25f, 1);
+            obj.transform.localScale = new Vector3(randScale, randScale, randScale);
             obj.SetActive(true);
             layer1.Add(obj);
         }
@@ -183,8 +246,64 @@ public class StarfieldScript : MonoBehaviour {
         if (layer2.Count < numOfStarsLayer2)
         {
             GameObject obj;
+            Vector2 dirNormal;
             obj = starPool.GetPooledObject();
-            obj.transform.position = player.transform.position;
+            dirNormal = player.GetComponent<Rigidbody2D>().velocity.normalized;
+            if (dirNormal.x > 0)
+            {
+                if (dirNormal.y > 0)
+                {
+                    //top right
+                    if (Random.value < 0.5f)
+                    {
+                        obj.transform.position = new Vector2(Random.Range(starfieldRect.xMin, starfieldRect.xMax), starfieldRect.yMax);
+                    }
+                    else
+                    {
+                        obj.transform.position = new Vector2(starfieldRect.xMax, Random.Range(starfieldRect.yMin, starfieldRect.yMax));
+                    }
+                }
+                else
+                {
+                    //bottom right
+                    if (Random.value < 0.5f)
+                    {
+                        obj.transform.position = new Vector2(Random.Range(starfieldRect.xMin, starfieldRect.xMax), starfieldRect.yMin);
+                    }
+                    else
+                    {
+                        obj.transform.position = new Vector2(starfieldRect.xMax, Random.Range(starfieldRect.yMin, starfieldRect.yMax));
+                    }
+                }
+
+            }
+            else
+            {
+                if (dirNormal.y > 0)
+                {
+                    //top left
+                    if (Random.value < 0.5f)
+                    {
+                        obj.transform.position = new Vector2(Random.Range(starfieldRect.xMin, starfieldRect.xMax), starfieldRect.yMax);
+                    }
+                    else
+                    {
+                        obj.transform.position = new Vector2(starfieldRect.xMin, Random.Range(starfieldRect.yMin, starfieldRect.yMax));
+                    }
+                }
+                else
+                {
+                    //bottom left
+                    if (Random.value < 0.5f)
+                    {
+                        obj.transform.position = new Vector2(Random.Range(starfieldRect.xMin, starfieldRect.xMax), starfieldRect.yMin);
+                    }
+                    else
+                    {
+                        obj.transform.position = new Vector2(starfieldRect.xMin, Random.Range(starfieldRect.yMin, starfieldRect.yMax));
+                    }
+                }
+            }
             obj.SetActive(true);
             layer2.Add(obj);
         }
@@ -193,8 +312,70 @@ public class StarfieldScript : MonoBehaviour {
         if (layer3.Count < numOfStarsLayer3)
         {
             GameObject obj;
+            Vector2 dirNormal;
             obj = starPool.GetPooledObject();
-            obj.transform.position = player.transform.position;
+            dirNormal = player.GetComponent<Rigidbody2D>().velocity.normalized;
+            if (dirNormal.x > 0)
+            {
+                if (dirNormal.y > 0)
+                {
+                    //top right
+                    if (Random.value < 0.5f)
+                    {
+                        obj.transform.position = new Vector2(Random.Range(starfieldRect.xMin, starfieldRect.xMax), starfieldRect.yMax);
+                    }
+                    else
+                    {
+                        obj.transform.position = new Vector2(starfieldRect.xMax, Random.Range(starfieldRect.yMin, starfieldRect.yMax));
+                    }
+
+
+                }
+                else
+                {
+                    //bottom right
+                    if (Random.value < 0.5f)
+                    {
+                        obj.transform.position = new Vector2(Random.Range(starfieldRect.xMin, starfieldRect.xMax), starfieldRect.yMin);
+                    }
+                    else
+                    {
+                        obj.transform.position = new Vector2(starfieldRect.xMax, Random.Range(starfieldRect.yMin, starfieldRect.yMax));
+                    }
+
+
+                }
+
+            }
+            else
+            {
+                if (dirNormal.y > 0)
+                {
+                    //top left
+                    if (Random.value < 0.5f)
+                    {
+                        obj.transform.position = new Vector2(Random.Range(starfieldRect.xMin, starfieldRect.xMax), starfieldRect.yMax);
+                    }
+                    else
+                    {
+                        obj.transform.position = new Vector2(starfieldRect.xMin, Random.Range(starfieldRect.yMin, starfieldRect.yMax));
+                    }
+
+
+                }
+                else
+                {
+                    //bottom left
+                    if (Random.value < 0.5f)
+                    {
+                        obj.transform.position = new Vector2(Random.Range(starfieldRect.xMin, starfieldRect.xMax), starfieldRect.yMin);
+                    }
+                    else
+                    {
+                        obj.transform.position = new Vector2(starfieldRect.xMin, Random.Range(starfieldRect.yMin, starfieldRect.yMax));
+                    }
+                }
+            }
             obj.SetActive(true);
             layer3.Add(obj);
         }
