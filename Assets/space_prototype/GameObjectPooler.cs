@@ -15,19 +15,14 @@ public class GameObjectPooler : MonoBehaviour
     private void Awake()
     {
         current = this;
-    }
+		objectPool = new List<GameObject>();
 
-    // Use this for initialization
-    void Start()
-    {
-        objectPool = new List<GameObject>();
-
-        for (int i = 0; i < poolSize; i++)
-        {
-            GameObject obj = (GameObject)Instantiate(pooledObject);
-            obj.SetActive(false);
-            objectPool.Add(obj);
-        }
+		for (int i = 0; i < poolSize; i++)
+		{
+			GameObject obj = (GameObject)Instantiate(pooledObject);
+			obj.SetActive(false);
+			objectPool.Add(obj);
+		}
     }
 
     public GameObject GetPooledObject()

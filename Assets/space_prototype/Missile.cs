@@ -17,13 +17,13 @@ public class Missile : MonoBehaviour, DamageSource {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		Debug.Log ("collided with something: " + other.name);
 		Damageable damageable = other.GetComponent<Damageable> ();
 		if (damageable != null) {
 			damageable.TakeDamage (damageInflicted, this);
+
+			Destroy (gameObject);
 		}
 
 
-		Destroy (gameObject);
 	}
 }
