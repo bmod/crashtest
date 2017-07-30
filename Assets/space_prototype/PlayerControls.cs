@@ -33,19 +33,15 @@ public class PlayerControls : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (Controls == ControlMode.Classic)
-		{
-			CheckForBoosterRotation ();
-			CheckForGunRotation ();
-			CheckForShot ();
-			CheckForBoost ();
-			
-		} else if (Controls == ControlMode.GamePad)
-		{
-			CheckForBoosterRotationGamePad();
-			CheckForGunRotationGamePad();
-			CheckForShotGamePad();
-		}
+
+		CheckForBoosterRotation ();
+		CheckForGunRotation ();
+		CheckForShot ();
+		CheckForBoost ();
+		// Gamepad controls can be used at the same time
+		CheckForBoosterRotationGamePad();
+		CheckForGunRotationGamePad();
+		CheckForShotGamePad();
 	}
 
 	public GameObject missilePrefab;
