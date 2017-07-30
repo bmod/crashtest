@@ -246,7 +246,7 @@ public class StarfieldScript : MonoBehaviour {
                     }
                 }
             }
-            float randScale = Random.Range(0.25f, 1);
+            float randScale = Random.Range(starScaleMin, starScaleMax);
             obj.transform.localScale = new Vector3(randScale, randScale, randScale);
             obj.SetActive(true);
             layer1.Add(obj);
@@ -314,6 +314,7 @@ public class StarfieldScript : MonoBehaviour {
                     }
                 }
             }
+            float randScale = Random.Range(starScaleMin, starScaleMax);
             obj.SetActive(true);
             layer2.Add(obj);
         }
@@ -386,6 +387,7 @@ public class StarfieldScript : MonoBehaviour {
                     }
                 }
             }
+            float randScale = Random.Range(starScaleMin, starScaleMax);
             obj.SetActive(true);
             layer3.Add(obj);
         }
