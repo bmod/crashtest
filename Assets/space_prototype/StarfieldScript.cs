@@ -9,8 +9,8 @@ public class StarfieldScript : MonoBehaviour {
     public int numOfStarsLayer3 = 100;
     public int starfieldHeight = 20;
     public int starfieldWidth = 30;
-    public float layer1Speed = 0.1f;
-    public float layer2Speed = 0.05f;
+    public float layer1Speed = 0.5f;
+    public float layer2Speed = 0.25f;
     public float layer3Speed = 0.001f;
     public float starTimeout = 1;
     public float rangeLow = -1.0f;
