@@ -23,15 +23,9 @@ public class AstronautDeathEffects : MonoBehaviour {
 		go.transform.localRotation = astronautDamageable.transform.localRotation;
 		go.transform.position = astronautDamageable.transform.position;
 
-		Debug.LogError ("We need to update this function with Game over UI");
-		StartCoroutine (RestartScene ());
+		UIManager.instance.PresentGameOver ();
 	}
 
-
-	IEnumerator RestartScene() {
-		yield return new WaitForSeconds (4f);
-		SceneManager.LoadScene (0);
-	}
 
 	void OnDestroy() {
 		astronautDamageable.OnKilled -= GameOverOnKilled;

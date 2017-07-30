@@ -20,18 +20,18 @@ public class GenericDeathEffect : MonoBehaviour {
 
 	void AppearAsDestroyed() {
 
-		DisableAllAssociated<Collider2D>();
-		DisableAllAssociated<SpriteRenderer>();
+		DisableAllAssociated<Collider2D>(gameObject);
+		DisableAllAssociated<SpriteRenderer>(gameObject);
 	}
 
-	void DisableAllAssociated<T>() where T : Component {
-		T sr = GetComponent<T>();
+	public static void DisableAllAssociated<T>(GameObject onGameObject) where T : Component {
+		T sr = onGameObject.GetComponent<T>();
 		if(sr != null) {
 			Destroy (sr);
 
 		}
 
-		foreach(T rend in GetComponentsInChildren<T>()) {
+		foreach(T rend in onGameObject.GetComponentsInChildren<T>()) {
 			Destroy (rend);
 
 		}
