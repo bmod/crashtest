@@ -16,6 +16,9 @@ public class MiteSeeking : MonoBehaviour, DamageSource {
 	public float seekPower = 2f;
 	// Update is called once per frame
 	void Update () {
+		if (PlayerControls.instance.astronaut == null) { //he died
+			return;
+		}
 		Seek ();
 		CheckForAnimChange ();
 
