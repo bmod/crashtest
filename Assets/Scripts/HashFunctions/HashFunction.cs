@@ -51,7 +51,7 @@ public abstract class HashFunction {
 	{
 		var d = max - min;
 		if (d == 0)
-			d = 100000;
+			d = 1;
 		return min + (int)(GetHash (x, y) % d);
 	}
 	public int Range (int min, int max, int x, int y, int z) {
