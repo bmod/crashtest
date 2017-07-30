@@ -25,7 +25,11 @@ public class PlayerControls : MonoBehaviour, MissileLauncher {
 	KeyCode boosterKey = KeyCode.W;
 
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
+		// Booster will turned back on when actually boosting
+		boosting = false;
+		
 		CheckForBoosterRotation ();
 		CheckForGunRotation ();
 		CheckForShot ();
@@ -33,9 +37,11 @@ public class PlayerControls : MonoBehaviour, MissileLauncher {
 
 		// Gamepad controls can be used at the same time.
 
-//		CheckForBoosterRotationGamePad();
-//		CheckForGunRotationGamePad();
-//		CheckForShotGamePad();
+		CheckForBoosterRotationGamePad();
+		CheckForGunRotationGamePad();
+		CheckForShotGamePad();
+		
+		HandleBoost();
 	}
 
 	public AudioSource boosterSoundLoop;
@@ -93,41 +99,34 @@ public class PlayerControls : MonoBehaviour, MissileLauncher {
 		particleEmission = boosterParticles.emission;
 	}
 
+	bool boosting = false;
+	void HandleBoost()
+	{
+		particleEmission.enabled = boosting;
+		
+		if (boosting && !boosterSoundLoop.isPlaying)
+			boosterSoundLoop.Play();
+		if (!boosting && boosterSoundLoop.isPlaying)
+			boosterSoundLoop.Stop();
+	}
 
 	public Rigidbody2D boosterRigidbody;
 	ParticleSystem.EmissionModule particleEmission;
 	public float boosterForceMagnitude = 8f;
 
 	[SerializeField]
-	bool boosting = false;
 	void CheckForBoost() {
 		if (Input.GetKey (boosterKey)) {
-			boosting = true;
 			Vector3 force = UnitForward2DFromTransform (boosterRotator) * boosterForceMagnitude;
 			boosterRigidbody.AddForce (new Vector2 (force.x, force.y));
-		} else {
-			boosting = false;
+			boosting = true;
 		}
-
-		if (boosting) {
-//			Debug.Log ("doing boosting!");
-			particleEmission.enabled = true;
-			if(!boosterSoundLoop.isPlaying) 
-				boosterSoundLoop.Play ();
-
-		} else {
-			boosterSoundLoop.Stop();
-//			Debug.Log ("nNOT boosting");
-			particleEmission.enabled = false;
-		}
-			
 	}
 
 	void CheckForBoosterRotation() {
 		if (Input.GetKey (rotateBoosterClockwise)) {
 			//			Debug.Log ("rotattng!");
 			boosterRotator.Rotate (new Vector3 (0f, 0f, -(Time.deltaTime * boosterRotateSpeed)));
-
 		}
 
 		if (Input.GetKey (rotateBoosterCounterClockwise)) {
@@ -150,11 +149,7 @@ public class PlayerControls : MonoBehaviour, MissileLauncher {
 
 			var force = UnitForward2DFromTransform(boosterRotator) * boosterForceMagnitude * inputMagnitude;
 			boosterRigidbody.AddForce(force);
-			particleEmission.enabled = true;
-		}
-		else
-		{
-			particleEmission.enabled = false;
+			boosting = true;
 		}
 	}
 
