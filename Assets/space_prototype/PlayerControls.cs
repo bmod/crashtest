@@ -1,9 +1,14 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerControls : MonoBehaviour {
 
+	public enum ControlMode
+	{
+		Classic, GamePad
+	}
+	
+	public ControlMode Controls = ControlMode.Classic;
 
 	KeyCode rotateGunCounterClockWise = KeyCode.LeftArrow;
 	KeyCode rotateGunClockwise = KeyCode.RightArrow;
@@ -28,10 +33,19 @@ public class PlayerControls : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		CheckForBoosterRotation ();
-		CheckForGunRotation ();
-		CheckForShot ();
-		CheckForBoost ();
+		if (Controls == ControlMode.Classic)
+		{
+			CheckForBoosterRotation ();
+			CheckForGunRotation ();
+			CheckForShot ();
+			CheckForBoost ();
+			
+		} else if (Controls == ControlMode.GamePad)
+		{
+			CheckForBoosterRotationGamePad();
+			CheckForGunRotationGamePad();
+			CheckForShotGamePad();
+		}
 	}
 
 	public GameObject missilePrefab;
@@ -40,6 +54,12 @@ public class PlayerControls : MonoBehaviour {
 		if (Input.GetKey (gunShotKey)) {
 			Shoot ();
 		}
+	}
+
+	void CheckForShotGamePad()
+	{
+		if (Input.GetAxis("Fire1") < -0.2)
+			Shoot();
 	}
 
 	bool cooling = false;
@@ -112,6 +132,21 @@ public class PlayerControls : MonoBehaviour {
 
 	}
 
+	void CheckForBoosterRotationGamePad()
+	{
+		var leftSticKVec = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+		var inputMagnitude = leftSticKVec.magnitude;
+		if (inputMagnitude > 0.2f)
+		{
+			var currentAngle = boosterRotator.eulerAngles.z;
+			var targetAngle = Mathf.Atan2(leftSticKVec.y, leftSticKVec.x)* Mathf.Rad2Deg - 90;
+			var newAngle = Mathf.MoveTowardsAngle(currentAngle, targetAngle, Time.deltaTime * boosterRotateSpeed);
+			boosterRotator.rotation = Quaternion.Euler(0, 0, newAngle );
+
+			var force = UnitForward2DFromTransform (boosterRotator) * boosterForceMagnitude * inputMagnitude;
+			boosterRigidbody.AddForce (force);
+		}
+	}
 
 
 	void CheckForGunRotation() {
@@ -123,6 +158,20 @@ public class PlayerControls : MonoBehaviour {
 			//			Debug.Log ("rotattng!");
 			gunRotator.Rotate (new Vector3 (0f, 0f, Time.deltaTime * gunRotationSpeed));
 		}
+	}
+
+	void CheckForGunRotationGamePad()
+	{
+		var rightStickVec = new Vector3(Input.GetAxis("Horizontal2"), Input.GetAxis("Vertical2"), 0);
+		var inputMagnitude = rightStickVec.magnitude;
+		if (inputMagnitude > 0.2f)
+		{
+			var currentAngle = gunRotator.eulerAngles.z;
+			var targetAngle = Mathf.Atan2(rightStickVec.y, rightStickVec.x)* Mathf.Rad2Deg - 90;
+			var newAngle = Mathf.MoveTowardsAngle(currentAngle, targetAngle, Time.deltaTime * gunRotationSpeed);
+			gunRotator.rotation = Quaternion.Euler(0, 0, newAngle );
+		}
+		
 	}
 
 	public static PlayerControls instance;

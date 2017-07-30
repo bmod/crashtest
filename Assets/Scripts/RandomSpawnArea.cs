@@ -86,6 +86,7 @@ public class RandomSpawnArea : MonoBehaviour
     public int minSpawnPointsInCell = 0;
     public int maxSpawnPointsInCell = 3;
     public int seed = 100;
+    public bool DestroyOutOfBounds = true;
 
     private Vector2 _anchor;
     private Rect _liveArea;
@@ -171,6 +172,8 @@ public class RandomSpawnArea : MonoBehaviour
 
     private void DestroyCell(int hash)
     {
+        if (!DestroyOutOfBounds)
+            return;
         if (!_cells.ContainsKey(hash)) return;
         _cells[hash].Destroy();
         _cells.Remove(hash);
