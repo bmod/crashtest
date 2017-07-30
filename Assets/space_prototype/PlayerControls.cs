@@ -30,10 +30,11 @@ public class PlayerControls : MonoBehaviour {
 		CheckForGunRotation ();
 		CheckForShot ();
 		CheckForBoost ();
-		// Gamepad controls can be used at the same time
-		CheckForBoosterRotationGamePad();
-		CheckForGunRotationGamePad();
-		CheckForShotGamePad();
+		// Gamepad controls can be used at the same time.
+
+//		CheckForBoosterRotationGamePad();
+//		CheckForGunRotationGamePad();
+//		CheckForShotGamePad();
 	}
 
 	public GameObject missilePrefab;
@@ -88,6 +89,8 @@ public class PlayerControls : MonoBehaviour {
 	public Rigidbody2D boosterRigidbody;
 	ParticleSystem.EmissionModule particleEmission;
 	public float boosterForceMagnitude = 8f;
+
+	[SerializeField]
 	bool boosting = false;
 	void CheckForBoost() {
 		if (Input.GetKey (boosterKey)) {
@@ -99,8 +102,10 @@ public class PlayerControls : MonoBehaviour {
 		}
 
 		if (boosting) {
+			Debug.Log ("doing boosting!");
 			particleEmission.enabled = true;
 		} else {
+			Debug.Log ("nNOT boosting");
 			particleEmission.enabled = false;
 		}
 			
