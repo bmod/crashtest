@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Missile : MonoBehaviour, DamageSource {
 
-	public int damageInflicted = 1;
+	public int damageInflicted = 5;
 
 	// Use this for initialization
 	void Start () {
