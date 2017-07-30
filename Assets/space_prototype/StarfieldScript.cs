@@ -13,6 +13,8 @@ public class StarfieldScript : MonoBehaviour {
     public float layer2Speed = 0.05f;
     public float layer3Speed = 0.01f;
     public int starTimeout = 1;
+    public float rangeLow = -1.0f;
+    public float rangeHigh = 1.0f;
 
     public GameObjectPooler starPool;
     public GameObject player;
@@ -54,7 +56,7 @@ public class StarfieldScript : MonoBehaviour {
             for (float j = length/2; j < starfieldHeight; j+=length)
             {
                 obj = starPool.GetPooledObject();
-                obj.transform.position = new Vector2(i, j) - starfieldRect.position;
+                obj.transform.position = new Vector2(i+Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
                 obj.SetActive(true);
                 layer1.Add(obj);
             }
@@ -68,7 +70,7 @@ public class StarfieldScript : MonoBehaviour {
             for (float j = length / 2; j < starfieldHeight; j += length)
             {
                 obj = starPool.GetPooledObject();
-                obj.transform.position = new Vector2(i, j) - starfieldRect.position;
+                obj.transform.position = new Vector2(i + Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
                 obj.SetActive(true);
                 layer2.Add(obj);
             }
@@ -83,7 +85,7 @@ public class StarfieldScript : MonoBehaviour {
             for (float j = length / 2; j < starfieldHeight; j += length)
             {
                 obj = starPool.GetPooledObject();
-                obj.transform.position = new Vector2(i, j) - starfieldRect.position;
+                obj.transform.position = new Vector2(i + Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
                 obj.SetActive(true);
                 layer3.Add(obj);
             }
