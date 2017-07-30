@@ -16,11 +16,13 @@ public class MiteSeeking : MonoBehaviour, DamageSource {
 	public float seekPower = 2f;
 	// Update is called once per frame
 	void Update () {
+		CheckForAnimChange ();
 		if (PlayerControls.instance.astronaut == null) { //he died
+			SeekLastPosition();
 			return;
 		}
+
 		Seek ();
-		CheckForAnimChange ();
 
 	}
 
@@ -39,12 +41,17 @@ public class MiteSeeking : MonoBehaviour, DamageSource {
 
 
 	bool InRange() {
+		if (PlayerControls.instance.astronaut == null) {
+			return false;
+		}
 		bool inr = distanceToChangeToAttacking * distanceToChangeToAttacking >
 		(PlayerControls.instance.astronaut.position - transform.position).sqrMagnitude;
 		return inr;
 	}
 
 	public void CheckForOverlapAndDamagePlayer() {
+		if (PlayerControls.instance.astronaut == null) //He died.
+			return;
 		Collider2D player = PlayerControls.instance.astronaut.GetComponent<Collider2D> ();
 		if (GetComponent<Collider2D> ().IsTouching (player)) {
 
@@ -55,7 +62,9 @@ public class MiteSeeking : MonoBehaviour, DamageSource {
 		}
 	}
 
+	public Vector3 lastPosition;
 	void Seek() {
+		lastPosition = PlayerControls.instance.astronaut.position;
 		Vector2 directions = PlayerControls.instance.astronaut.position - transform.position;
 
 		directions = directions + PlayerControls.instance.astronaut.GetComponent<Rigidbody2D> ().velocity;
@@ -63,5 +72,16 @@ public class MiteSeeking : MonoBehaviour, DamageSource {
 		directions = directions.normalized * seekPower;
 		GetComponent<Rigidbody2D> ().AddForce (new Vector2 (directions.x, directions.y));
 	}
+
+	void SeekLastPosition() {
+		
+		Vector2 directions = lastPosition - transform.position;
+
+	
+
+		directions = directions.normalized * seekPower;
+		GetComponent<Rigidbody2D> ().AddForce (new Vector2 (directions.x, directions.y));
+	}
+
 
 }
