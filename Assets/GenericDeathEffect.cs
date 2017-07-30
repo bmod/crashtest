@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GenericDeathEffect : MonoBehaviour {
 
+
+
 	// Use this for initialization
 	void Start () {
 		GetComponent<Damageable>().OnKilled += (DamageSource source) => {

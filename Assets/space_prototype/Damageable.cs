@@ -26,6 +26,13 @@ public class Damageable : MonoBehaviour {
 				OnKilled (source);
 			}
 		}
+
+		if (source is Missile) {
+			Missile missile = source as Missile;
+			if (missile.launcher is PlayerControls) {
+				PickupDropChanceManager.instance.PlayerShotSomethingDown (this);
+			}
+		}
 	}
 
 	public void AddHealth(int h)

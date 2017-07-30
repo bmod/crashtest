@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class PlayerControls : MonoBehaviour {
+public class PlayerControls : MonoBehaviour, MissileLauncher {
 
 	KeyCode rotateGunCounterClockWise = KeyCode.LeftArrow;
 	KeyCode rotateGunClockwise = KeyCode.RightArrow;
@@ -30,6 +30,7 @@ public class PlayerControls : MonoBehaviour {
 		CheckForGunRotation ();
 		CheckForShot ();
 		CheckForBoost ();
+
 		// Gamepad controls can be used at the same time.
 
 //		CheckForBoosterRotationGamePad();
@@ -58,6 +59,7 @@ public class PlayerControls : MonoBehaviour {
 		if (cooling)
 			return;
 		GameObject shot = Instantiate (missilePrefab);
+		shot.GetComponent<Missile> ().launcher = this;
 		shot.transform.position = barrelOpening.position;
 		Vector3 launchVel = UnitForward2DFromTransform (gunRotator) * bulletSpeed;
 		Vector3 starting = boosterRigidbody.GetComponent<Rigidbody2D> ().velocity;
@@ -102,10 +104,10 @@ public class PlayerControls : MonoBehaviour {
 		}
 
 		if (boosting) {
-			Debug.Log ("doing boosting!");
+//			Debug.Log ("doing boosting!");
 			particleEmission.enabled = true;
 		} else {
-			Debug.Log ("nNOT boosting");
+//			Debug.Log ("nNOT boosting");
 			particleEmission.enabled = false;
 		}
 			

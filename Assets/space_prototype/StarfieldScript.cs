@@ -39,7 +39,13 @@ public class StarfieldScript : MonoBehaviour {
         starfieldRect.width = starfieldWidth;
 
         starfieldOffset = new Vector3(starfieldRect.width / 2.0f, starfieldRect.height / 2.0f);
-        starfieldRect.position = player.transform.position + starfieldOffset;
+        
+
+		if (player == null) {
+			starfieldRect.position = transform.position;
+		} else {
+			starfieldRect.position = player.transform.position + starfieldOffset;
+		}
 
         GameObject obj;
 
@@ -102,6 +108,8 @@ public class StarfieldScript : MonoBehaviour {
 
 
     void Update() {
+		if (player == null)
+			return;
         //Center starfield rect on player
         starfieldRect.position = player.transform.position - starfieldOffset;
 

@@ -53,6 +53,8 @@
      <Compile Include="Assets\MiteDeath.cs" />
      <Compile Include="Assets\MiteHatchery.cs" />
      <Compile Include="Assets\MiteSeeking.cs" />
+     <Compile Include="Assets\MusicManager.cs" />
+     <Compile Include="Assets\PickupDropChanceManager.cs" />
      <Compile Include="Assets\PowerRunningOut.cs" />
      <Compile Include="Assets\Scripts\HashFunctions\HashFunction.cs" />
      <Compile Include="Assets\Scripts\HashFunctions\MurmurHash.cs" />
@@ -64,6 +66,7 @@
      <Compile Include="Assets\SpaceManDeathExplode.cs" />
      <Compile Include="Assets\StarLife.cs" />
      <Compile Include="Assets\Stars.cs" />
+     <Compile Include="Assets\TitleUI.cs" />
      <Compile Include="Assets\UIManager.cs" />
      <Compile Include="Assets\space_prototype\AstronautDeathEffects.cs" />
      <Compile Include="Assets\space_prototype\CameraFollowing.cs" />
