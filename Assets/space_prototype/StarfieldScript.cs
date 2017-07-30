@@ -147,8 +147,6 @@ public class StarfieldScript : MonoBehaviour {
             }
         }
 
-
-
         //Update 3rd Layer
         for (int i = layer3.Count - 1; i >= 0; i--)
         {
@@ -172,21 +170,33 @@ public class StarfieldScript : MonoBehaviour {
         }
 
         //Check number of stars in 1st layer and add more in direction of player movement
-        if (layer1.Count < numOfStarsLayer1)
+        while (layer1.Count < numOfStarsLayer1)
         {
-
+            GameObject obj;
+            obj = starPool.GetPooledObject();
+            obj.transform.position = player.transform.position;
+            obj.SetActive(true);
+            layer1.Add(obj);
         }
 
         //Check number of stars in 2nd layer and add more in direction of player movement
         if (layer2.Count < numOfStarsLayer2)
         {
-
+            GameObject obj;
+            obj = starPool.GetPooledObject();
+            obj.transform.position = player.transform.position;
+            obj.SetActive(true);
+            layer2.Add(obj);
         }
 
         //Check number of stars in 3rd layer and add more in direction of player movement
         if (layer3.Count < numOfStarsLayer3)
         {
-
+            GameObject obj;
+            obj = starPool.GetPooledObject();
+            obj.transform.position = player.transform.position;
+            obj.SetActive(true);
+            layer3.Add(obj);
         }
     }
 
