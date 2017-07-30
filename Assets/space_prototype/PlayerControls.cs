@@ -38,6 +38,9 @@ public class PlayerControls : MonoBehaviour, MissileLauncher {
 //		CheckForShotGamePad();
 	}
 
+	public AudioSource boosterSoundLoop;
+	public AudioSource gunFireSound;
+
 	public GameObject missilePrefab;
 
 	void CheckForShot() {
@@ -66,6 +69,9 @@ public class PlayerControls : MonoBehaviour, MissileLauncher {
 		shot.GetComponent<Rigidbody2D> ().velocity =  launchVel + starting;
 		StartCoroutine (Cooldown ());
 		StartCoroutine (KillBullet (shot));
+
+		gunFireSound.pitch = .7f + Random.Range (-.1f, .1f);
+		gunFireSound.Play ();
 	}
 
 	IEnumerator Cooldown() {
@@ -106,7 +112,11 @@ public class PlayerControls : MonoBehaviour, MissileLauncher {
 		if (boosting) {
 //			Debug.Log ("doing boosting!");
 			particleEmission.enabled = true;
+			if(!boosterSoundLoop.isPlaying) 
+				boosterSoundLoop.Play ();
+
 		} else {
+			boosterSoundLoop.Stop();
 //			Debug.Log ("nNOT boosting");
 			particleEmission.enabled = false;
 		}
