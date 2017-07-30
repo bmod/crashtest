@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class StarfieldScript : MonoBehaviour {
 
-    public int numOfStarsLayer1 = 1;
-    public int numOfStarsLayer2 = 1;
-    public int numOfStarsLayer3 = 1;
-    public int starfieldHeight = 50;
-    public int starfieldWidth = 50;
-    public float layer2Speed = 1.2f;
-    public float layer3Speed = 1.8f;
+    public int numOfStarsLayer1 = 50;
+    public int numOfStarsLayer2 = 60;
+    public int numOfStarsLayer3 = 70;
+    public int starfieldHeight = 20;
+    public int starfieldWidth = 30;
+    public float layer1Speed = 0.1f;
+    public float layer2Speed = 0.05f;
+    public float layer3Speed = 0.01f;
     public int starTimeout = 1;
+    public float rangeLow = -1.0f;
+    public float rangeHigh = 1.0f;
 
     public GameObjectPooler starPool;
     public GameObject player;
@@ -34,6 +37,7 @@ public class StarfieldScript : MonoBehaviour {
         starfieldRect.width = starfieldWidth;
 
         starfieldOffset = new Vector3(starfieldRect.width / 2.0f, starfieldRect.height / 2.0f);
+        starfieldRect.position = player.transform.position + starfieldOffset;
 
         GameObject obj;
 
@@ -42,28 +46,49 @@ public class StarfieldScript : MonoBehaviour {
         layer2 = new List<GameObject>();
         layer3 = new List<GameObject>();
 
-        for (int i = 0; i < numOfStarsLayer1; i++)
+        //layer1 initial starfield generation
+        float totalArea = starfieldWidth * starfieldHeight;
+        float starArea = totalArea / numOfStarsLayer1;
+        float length = Mathf.Sqrt(starArea);
+
+        for (float i = length/2; i < starfieldWidth; i+=length)
         {
+            for (float j = length/2; j < starfieldHeight; j+=length)
+            {
                 obj = starPool.GetPooledObject();
-                obj.transform.position = player.transform.position - new Vector3(-4f, 0f);
+                obj.transform.position = new Vector2(i+Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
                 obj.SetActive(true);
                 layer1.Add(obj);
+            }
         }
 
-        for (int i = 0; i < numOfStarsLayer2; i++)
+        starArea = totalArea / numOfStarsLayer1;
+        length = Mathf.Sqrt(starArea);
+        //layer2 initial starfield generation
+        for (float i = length / 2; i < starfieldWidth; i += length)
         {
-            obj = starPool.GetPooledObject();
-            obj.transform.position = player.transform.position - new Vector3(-2f, 0f);
-            obj.SetActive(true);
-            layer2.Add(obj);
+            for (float j = length / 2; j < starfieldHeight; j += length)
+            {
+                obj = starPool.GetPooledObject();
+                obj.transform.position = new Vector2(i + Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
+                obj.SetActive(true);
+                layer2.Add(obj);
+            }
         }
 
-        for (int i = 0; i < numOfStarsLayer3; i++)
+        //layer3 initial starfield generation
+        starArea = totalArea / numOfStarsLayer1;
+        length = Mathf.Sqrt(starArea);
+        //layer2 initial starfield generation
+        for (float i = length / 2; i < starfieldWidth; i += length)
         {
-            obj = starPool.GetPooledObject();
-            obj.transform.position = player.transform.position - new Vector3(-0f, 0f);
-            obj.SetActive(true);
-            layer3.Add(obj);
+            for (float j = length / 2; j < starfieldHeight; j += length)
+            {
+                obj = starPool.GetPooledObject();
+                obj.transform.position = new Vector2(i + Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
+                obj.SetActive(true);
+                layer3.Add(obj);
+            }
         }
     }
 
@@ -79,7 +104,7 @@ public class StarfieldScript : MonoBehaviour {
         //Update 1st layer
         for (int i = layer1.Count - 1; i >= 0; i--)
         {
-            layer1[i].transform.position += deltaPosition;
+            layer1[i].transform.position += (deltaPosition * layer1Speed);
             StarLife script = layer1[i].GetComponent<StarLife>();
 
             if (!starfieldRect.Contains(layer1[i].transform.position))
