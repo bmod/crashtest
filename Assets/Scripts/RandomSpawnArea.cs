@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Xml.Serialization;
+using NUnit.Framework;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 
@@ -71,15 +74,23 @@ internal struct IntBounds
         return new IntBounds
         {
             XMin = Mathf.Min(XMin, other.XMin),
-            XMax = Mathf.Min(XMax, other.XMax),
+            XMax = Mathf.Max(XMax, other.XMax),
             YMin = Mathf.Min(YMin, other.YMin),
-            YMax = Mathf.Min(YMax, other.YMax)
+            YMax = Mathf.Max(YMax, other.YMax)
         };
+    }
+
+    public string ToString()
+    {
+        return "min: " + XMin + ", " + YMin + ", max: " + XMax + ", " + YMax;
     }
 }
 
 public class RandomSpawnArea : MonoBehaviour
 {
+    public float GradientRange = 10; // in cells
+    public AnimationCurve GradientCurve = new AnimationCurve();
+    public bool UseGradientDistribution = false;
     public GameObject[] gameObjects;
     public float LiveAreaSizeMultiplier = 2;
     public float CellSize = 10;
@@ -87,6 +98,10 @@ public class RandomSpawnArea : MonoBehaviour
     public int maxSpawnPointsInCell = 3;
     public int seed = 100;
     public bool DestroyOutOfBounds = true;
+    public bool Randomize = true;
+    public float ParallaxMultiplier = 1;
+    public bool DebugDraw = false;
+    public bool RandomOrientation = true;
 
     private Vector2 _anchor;
     private Rect _liveArea;
@@ -109,27 +124,29 @@ public class RandomSpawnArea : MonoBehaviour
         _liveArea.width = Camera.main.aspect * h * LiveAreaSizeMultiplier;
 
         // Center on camera
-        _liveArea.position = new Vector2(_anchor.x - _liveArea.width / 2, _anchor.y - _liveArea.height / 2);
+        _liveArea.position = new Vector2(_anchor.x - _liveArea.width / 2, _anchor.y - _liveArea.height / 2) * ParallaxMultiplier;
+        if (ParallaxMultiplier != 1)
+            transform.position = _anchor * (1-ParallaxMultiplier); 
         UpdateCells();
     }
 
 
     private SpawnPoint[] PointsInCell(int x, int y)
     {
+        Random.InitState(Hash(x, y));
         var pointCount = 0;
         if (minSpawnPointsInCell == maxSpawnPointsInCell)
-        {
             pointCount = minSpawnPointsInCell;
-        }
         else if (maxSpawnPointsInCell < minSpawnPointsInCell)
-        {
             pointCount = 1;
-        }
         else
         {
-            pointCount = _rand.Range(minSpawnPointsInCell, maxSpawnPointsInCell, x, y);
+            int maxPoints = maxSpawnPointsInCell;
+            if (UseGradientDistribution)
+                maxPoints = (int) (maxSpawnPointsInCell * GradientValue(x, y));
+            
+            pointCount = Random.Range(minSpawnPointsInCell, maxPoints);
         }
-        
         var pts = new SpawnPoint[pointCount];
         for (var i = 0; i < pointCount; i++)
         {
@@ -140,14 +157,21 @@ public class RandomSpawnArea : MonoBehaviour
 
     private SpawnPoint CreateSpawnPoint(int x, int y, int i)
     {
-        var go = gameObjects[_rand.Range(0, gameObjects.Length, x + 300, y)];
+        var go = gameObjects[Random.Range(0, gameObjects.Length)];
         var sp = new SpawnPoint();
-        sp.Pt = new Vector2(_rand.Value(x, y + 100 * i), _rand.Value(x + 200 * i, y));
+
+        var localPos = Vector2.one * .5f;
+        if (Randomize)
+            localPos = new Vector2(Random.value, Random.value);
+
+        sp.Pt = localPos;
         sp.instance = Instantiate(go);
+        sp.instance.transform.parent = transform;
         var pos = sp.Pt * CellSize + new Vector2(x, y) * CellSize;
-        var rot = _rand.Range(0, 3, x + 30, y) * 90;
-        sp.instance.transform.position = pos;
-        sp.instance.transform.Rotate(Vector3.forward * rot);
+
+        sp.instance.transform.localPosition = pos;
+        if (RandomOrientation) 
+            sp.instance.transform.Rotate(Vector3.forward * Random.Range(0, 3) * 90);
         sp.Index = i;
         return sp;
     }
@@ -178,17 +202,16 @@ public class RandomSpawnArea : MonoBehaviour
         _cells[hash].Destroy();
         _cells.Remove(hash);
     }
-
-
+    
+    private float GradientValue(int x, int y)
+    {
+        var d = new Vector2(x, y).magnitude;
+        return GradientCurve.Evaluate(d / GradientRange);
+    }
+    
     public int Hash(int x, int y)
     {
-        unchecked // integer overflows are accepted here
-        {
-            int h = 0;
-            h = (h * 397) ^ x;
-            h = (h * 397) ^ y;
-            return h;
-        }
+        return (int) _rand.GetHash(x, y);
     }
 
     private void UpdateCells()
@@ -206,19 +229,11 @@ public class RandomSpawnArea : MonoBehaviour
                 if (_cellBounds.Contains(x, y) && newBounds.Contains(x, y))
                     continue; // Cell is in both rectangles, no need to update
 
-                if (newBounds.Contains(x, y) && !_cellBounds.Contains(x, y))
-                {
-                    // New cell, create
+                if (newBounds.Contains(x, y))
                     CreateCell(x, y);
-                }
-//                if (!newBounds.Contains(x, y) && _cellBounds.Contains(x, y))
-//                {
-//                    // Old cell, destroy
-//                    DestroyCell(x, y);
-//                }
             }
         }
-
+        
 
         // Cleanup old cells, can be optimized (see above)
         var destroy = new List<int>();
@@ -233,6 +248,8 @@ public class RandomSpawnArea : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (!DebugDraw)
+            return;
 //        var xf = SceneView.lastActiveSceneView.camera.transform;
 //        _anchor = new Vector2(xf.position.x, xf.position.y);
 
