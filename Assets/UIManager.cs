@@ -75,8 +75,8 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void PresentGameOver() {
-		MusicManager.instance.FadeMusicPitchDown ();
 		StartCoroutine (DelayPresentGameOverMenu());
+		MusicManager.instance.FadeMusicPitchDown ();
 	}
 
 	public IEnumerator DelayPresentGameOverMenu() {
