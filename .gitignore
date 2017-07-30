@@ -71,5 +71,3 @@ sysinfo.txt
 /crashtest.csproj
 /crashtest.userprefs
 /crashtest.sln
-*.csproj
-*.sln

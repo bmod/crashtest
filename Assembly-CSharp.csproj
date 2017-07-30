@@ -61,6 +61,7 @@
      <Compile Include="Assets\Scripts\HashFunctions\WangHash.cs" />
      <Compile Include="Assets\Scripts\HashFunctions\XXHash.cs" />
      <Compile Include="Assets\Scripts\RandomSpawnArea.cs" />
+     <Compile Include="Assets\SpaceManDeathExplode.cs" />
      <Compile Include="Assets\StarLife.cs" />
      <Compile Include="Assets\Stars.cs" />
      <Compile Include="Assets\UIManager.cs" />

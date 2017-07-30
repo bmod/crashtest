@@ -7,6 +7,7 @@ public class AstronautDeathEffects : MonoBehaviour {
 
 
 	public Damageable astronautDamageable;
+	public GameObject deathPrefab;
 
 	// Use this for initialization
 	void Start () {
@@ -16,6 +17,12 @@ public class AstronautDeathEffects : MonoBehaviour {
 	void GameOverOnKilled(DamageSource source) {
 		Debug.Log ("Game over mon!");
 		Destroy (astronautDamageable.gameObject);
+
+
+		GameObject go = Instantiate (deathPrefab);
+		go.transform.localRotation = astronautDamageable.transform.localRotation;
+		go.transform.position = astronautDamageable.transform.position;
+
 		Debug.LogError ("We need to update this function with Game over UI");
 		StartCoroutine (RestartScene ());
 	}
