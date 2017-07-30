@@ -9,8 +9,9 @@ public class HurtPlayerOnCollision : MonoBehaviour, DamageSource {
 
 	void OnCollisionEnter2D(Collision2D other) {
 		if (other.collider.CompareTag ("Player")) {
+			
 			Rigidbody2D rgbd = other.collider.GetComponent<Rigidbody2D> ();
-			if (rgbd.velocity.sqrMagnitude > velocityMagThreshold * velocityMagThreshold) {
+			if (other.relativeVelocity.sqrMagnitude > velocityMagThreshold * velocityMagThreshold) {
 				Damageable damageable = other.collider.GetComponent<Damageable> ();
 				if (damageable != null) {
 					damageable.TakeDamage (1, this);
@@ -21,7 +22,7 @@ public class HurtPlayerOnCollision : MonoBehaviour, DamageSource {
 					}
 				}
 			} else {
-				Debug.Log ("velocity not high enough: " + rgbd.velocity);
+				Debug.Log ("velocity not high enough: " + rgbd.velocity.magnitude);
 			}
 
 
