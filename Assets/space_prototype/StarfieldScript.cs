@@ -15,6 +15,8 @@ public class StarfieldScript : MonoBehaviour {
     public int starTimeout = 1;
     public float rangeLow = -1.0f;
     public float rangeHigh = 1.0f;
+    public float starScaleMin = 0.08f;
+    public float starScaleMax = 0.5f;
 
     public GameObjectPooler starPool;
     public GameObject player;
@@ -58,7 +60,7 @@ public class StarfieldScript : MonoBehaviour {
             {
                 obj = starPool.GetPooledObject();
                 obj.transform.position = new Vector2(i+Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
-                float randScale = Random.Range(0.25f, 1);
+                float randScale = Random.Range(starScaleMin, starScaleMax);
                 obj.transform.localScale = new Vector3(randScale, randScale, randScale);
                 obj.SetActive(true);
                 layer1.Add(obj);
@@ -74,7 +76,7 @@ public class StarfieldScript : MonoBehaviour {
             {
                 obj = starPool.GetPooledObject();
                 obj.transform.position = new Vector2(i + Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
-                float randScale = Random.Range(0.25f, 1);
+                float randScale = Random.Range(starScaleMin, starScaleMax);
                 obj.transform.localScale = new Vector3(randScale, randScale, randScale);
                 obj.SetActive(true);
                 layer2.Add(obj);
@@ -90,7 +92,7 @@ public class StarfieldScript : MonoBehaviour {
             {
                 obj = starPool.GetPooledObject();
                 obj.transform.position = new Vector2(i + Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
-                float randScale = Random.Range(0.25f, 1);
+                float randScale = Random.Range(starScaleMin, starScaleMax);
                 obj.transform.localScale = new Vector3(randScale, randScale, randScale);
                 obj.SetActive(true);
                 layer3.Add(obj);
