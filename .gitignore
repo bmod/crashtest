@@ -71,3 +71,9 @@ sysinfo.txt
 /crashtest.csproj
 /crashtest.userprefs
 /crashtest.sln
+/Assembly-CSharp.csproj
+/Assembly-CSharp-Editor-firstpass.csproj
+/crashtest.csproj
+/crashtest.Editor.Plugins.csproj
+/crashtest.sln
+/crashtest.userprefs

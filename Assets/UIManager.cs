@@ -22,9 +22,11 @@ public class UIManager : MonoBehaviour {
 		if (go != null) {
 			playerDamageable = go.GetComponent<Damageable> ();
 			playerDamageable.OnDamageTaken += UpdateBarOnPlayerDamaged;
+			playerDamageable.OnHealed += UpdateBarOnPlayerHealed;
 
 			powerRunOut = go.GetComponent<PowerRunningOut> ();
 			powerRunOut.OnLostPower += UpdateBarOnPlayerLostPower;
+			powerRunOut.OnGainedPower += UpdateBarOnPlayerGainedPower;
 
 		} else {
 			Debug.LogError ("Couldn't find the SpaceMan object in camera");
@@ -45,9 +47,16 @@ public class UIManager : MonoBehaviour {
 	void UpdateBarOnPlayerDamaged(int amount, DamageSource source) {
 		healthBar.rectTransform.sizeDelta = new Vector2 (playerDamageable.HealthRatio * ogHealthbarWidth, healthBar.rectTransform.sizeDelta.y);
 	}
+	void UpdateBarOnPlayerHealed(int amount) {
+		healthBar.rectTransform.sizeDelta = new Vector2 (playerDamageable.HealthRatio * ogHealthbarWidth, healthBar.rectTransform.sizeDelta.y);
+	}
 
 
 	void UpdateBarOnPlayerLostPower(float amount) {
+		powerBar.rectTransform.sizeDelta = new Vector2 (powerRunOut.PowerRatio * ogPowerbarWidth, powerBar.rectTransform.sizeDelta.y);
+	}
+
+	void UpdateBarOnPlayerGainedPower(float amount) {
 		powerBar.rectTransform.sizeDelta = new Vector2 (powerRunOut.PowerRatio * ogPowerbarWidth, powerBar.rectTransform.sizeDelta.y);
 	}
 

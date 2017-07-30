@@ -32,6 +32,10 @@ public class Damageable : MonoBehaviour {
 	{
 		currentHealth = Mathf.Min(currentHealth+h, maxHealth);
 		print("Omnom!");
+		if (OnHealed != null) {
+			OnHealed (h);
+		}
+
 	}
 
 	public float HealthRatio {
@@ -47,6 +51,10 @@ public class Damageable : MonoBehaviour {
 
 	public delegate void DamageTakenAction(int amount, DamageSource source);
 	public event DamageTakenAction OnDamageTaken;
+
+
+	public delegate void HealedAction(int amount);
+	public event HealedAction OnHealed;
 
 	public delegate void KilledAction(DamageSource source);
 	public event KilledAction OnKilled;
