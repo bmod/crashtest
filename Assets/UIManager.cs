@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour {
 	float ogHealthbarWidth;
 	float ogPowerbarWidth;
 
-
+	public RectTransform gameOverRoot;
 
 	// Use this for initialization
 	void Start () {
@@ -33,10 +33,24 @@ public class UIManager : MonoBehaviour {
 		}
 
 
+		gameOverRoot.gameObject.SetActive (false);
+
 		ogHealthbarWidth = healthBar.rectTransform.sizeDelta.x;
 		ogPowerbarWidth = powerBar.rectTransform.sizeDelta.x;
 
 
+	}
+
+	public static UIManager instance;
+
+	void Awake() {
+		if (instance == null) {
+			instance = this;
+
+		} else {
+			Debug.LogError ("Had to destroy dupe: " + GetType());
+			Destroy (this);
+		}
 	}
 
 	void OnDestroy() {
@@ -60,10 +74,26 @@ public class UIManager : MonoBehaviour {
 		powerBar.rectTransform.sizeDelta = new Vector2 (powerRunOut.PowerRatio * ogPowerbarWidth, powerBar.rectTransform.sizeDelta.y);
 	}
 
-
-	
-	// Update is called once per frame
-	void Update () {
-		
+	public void PresentGameOver() {
+		MusicManager.instance.FadeMusicPitchDown ();
+		StartCoroutine (DelayPresentGameOverMenu());
 	}
+
+	public IEnumerator DelayPresentGameOverMenu() {
+		yield return new WaitForSeconds (3.3f);
+
+		gameOverRoot.gameObject.SetActive (true);
+		PlayerControls.instance.gameObject.SetActive (false);
+	}
+
+	public void BackToTitle() {
+		SceneManager.LoadScene ("Title");	
+		MusicManager.instance.FadeMusicPitchUp ();
+	}
+
+	public void Retry() {
+		SceneManager.LoadScene ("SpaceMan");
+		MusicManager.instance.FadeMusicPitchUp();
+	}
+
 }

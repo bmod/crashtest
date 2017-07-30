@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class PowerUp : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class PowerUp : MonoBehaviour
         Oxygen,
         Battery
     }
+
+	public AudioSource powerUpSound;
 
     public Type type = Type.Health;
     public int amount = 1;
@@ -32,7 +35,14 @@ public class PowerUp : MonoBehaviour
             case Type.Oxygen:
                 break;
         }
-
-		Destroy(gameObject);
+		StartCoroutine (DelayDeath ());
     }
+
+	IEnumerator DelayDeath() {
+		GenericDeathEffect.DisableAllAssociated<SpriteRenderer> (gameObject);
+		GenericDeathEffect.DisableAllAssociated<Collider2D> (gameObject);
+		powerUpSound.Play ();
+		yield return new WaitForSeconds (3f);
+		Destroy (gameObject);
+	}
 }
