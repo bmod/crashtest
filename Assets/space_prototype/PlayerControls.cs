@@ -3,13 +3,6 @@ using UnityEngine;
 
 public class PlayerControls : MonoBehaviour {
 
-	public enum ControlMode
-	{
-		Classic, GamePad
-	}
-	
-	public ControlMode Controls = ControlMode.Classic;
-
 	KeyCode rotateGunCounterClockWise = KeyCode.LeftArrow;
 	KeyCode rotateGunClockwise = KeyCode.RightArrow;
 	public float gunRotationSpeed = 180f;
@@ -33,7 +26,6 @@ public class PlayerControls : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
 		CheckForBoosterRotation ();
 		CheckForGunRotation ();
 		CheckForShot ();
@@ -135,12 +127,17 @@ public class PlayerControls : MonoBehaviour {
 		if (inputMagnitude > 0.2f)
 		{
 			var currentAngle = boosterRotator.eulerAngles.z;
-			var targetAngle = Mathf.Atan2(leftSticKVec.y, leftSticKVec.x)* Mathf.Rad2Deg - 90;
+			var targetAngle = Mathf.Atan2(leftSticKVec.y, leftSticKVec.x) * Mathf.Rad2Deg - 90;
 			var newAngle = Mathf.MoveTowardsAngle(currentAngle, targetAngle, Time.deltaTime * boosterRotateSpeed);
-			boosterRotator.rotation = Quaternion.Euler(0, 0, newAngle );
+			boosterRotator.rotation = Quaternion.Euler(0, 0, newAngle);
 
-			var force = UnitForward2DFromTransform (boosterRotator) * boosterForceMagnitude * inputMagnitude;
-			boosterRigidbody.AddForce (force);
+			var force = UnitForward2DFromTransform(boosterRotator) * boosterForceMagnitude * inputMagnitude;
+			boosterRigidbody.AddForce(force);
+			particleEmission.enabled = true;
+		}
+		else
+		{
+			particleEmission.enabled = false;
 		}
 	}
 
