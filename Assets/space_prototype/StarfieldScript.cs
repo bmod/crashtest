@@ -46,8 +46,9 @@ public class StarfieldScript : MonoBehaviour {
         layer2 = new List<GameObject>();
         layer3 = new List<GameObject>();
 
-        //layer1 initial starfield generation
         float totalArea = starfieldWidth * starfieldHeight;
+
+        //layer1 initial starfield generation
         float starArea = totalArea / numOfStarsLayer1;
         float length = Mathf.Sqrt(starArea);
 
@@ -57,12 +58,14 @@ public class StarfieldScript : MonoBehaviour {
             {
                 obj = starPool.GetPooledObject();
                 obj.transform.position = new Vector2(i+Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
+                float randScale = Random.Range(0.25f, 1);
+                obj.transform.localScale = new Vector3(randScale, randScale, randScale);
                 obj.SetActive(true);
                 layer1.Add(obj);
             }
         }
 
-        starArea = totalArea / numOfStarsLayer1;
+        starArea = totalArea / numOfStarsLayer2;
         length = Mathf.Sqrt(starArea);
         //layer2 initial starfield generation
         for (float i = length / 2; i < starfieldWidth; i += length)
@@ -71,21 +74,24 @@ public class StarfieldScript : MonoBehaviour {
             {
                 obj = starPool.GetPooledObject();
                 obj.transform.position = new Vector2(i + Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
+                float randScale = Random.Range(0.25f, 1);
+                obj.transform.localScale = new Vector3(randScale, randScale, randScale);
                 obj.SetActive(true);
                 layer2.Add(obj);
             }
         }
 
         //layer3 initial starfield generation
-        starArea = totalArea / numOfStarsLayer1;
+        starArea = totalArea / numOfStarsLayer3;
         length = Mathf.Sqrt(starArea);
-        //layer2 initial starfield generation
         for (float i = length / 2; i < starfieldWidth; i += length)
         {
             for (float j = length / 2; j < starfieldHeight; j += length)
             {
                 obj = starPool.GetPooledObject();
                 obj.transform.position = new Vector2(i + Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
+                float randScale = Random.Range(0.25f, 1);
+                obj.transform.localScale = new Vector3(randScale, randScale, randScale);
                 obj.SetActive(true);
                 layer3.Add(obj);
             }
@@ -189,8 +195,6 @@ public class StarfieldScript : MonoBehaviour {
                     {
                         obj.transform.position = new Vector2(starfieldRect.xMax, Random.Range(starfieldRect.yMin, starfieldRect.yMax));
                     }
-                    
-                    
                 }
                 else
                 {
@@ -203,10 +207,7 @@ public class StarfieldScript : MonoBehaviour {
                     {
                         obj.transform.position = new Vector2(starfieldRect.xMax, Random.Range(starfieldRect.yMin, starfieldRect.yMax));
                     }
-                    
-                    
                 }
-                
             }
             else
             {
@@ -221,8 +222,6 @@ public class StarfieldScript : MonoBehaviour {
                     {
                         obj.transform.position = new Vector2(starfieldRect.xMin, Random.Range(starfieldRect.yMin, starfieldRect.yMax));
                     }
-                    
-                    
                 }
                 else
                 {
@@ -237,6 +236,8 @@ public class StarfieldScript : MonoBehaviour {
                     }
                 }
             }
+            float randScale = Random.Range(0.25f, 1);
+            obj.transform.localScale = new Vector3(randScale, randScale, randScale);
             obj.SetActive(true);
             layer1.Add(obj);
         }
@@ -261,8 +262,6 @@ public class StarfieldScript : MonoBehaviour {
                     {
                         obj.transform.position = new Vector2(starfieldRect.xMax, Random.Range(starfieldRect.yMin, starfieldRect.yMax));
                     }
-
-
                 }
                 else
                 {
@@ -275,8 +274,6 @@ public class StarfieldScript : MonoBehaviour {
                     {
                         obj.transform.position = new Vector2(starfieldRect.xMax, Random.Range(starfieldRect.yMin, starfieldRect.yMax));
                     }
-
-
                 }
 
             }
@@ -293,8 +290,6 @@ public class StarfieldScript : MonoBehaviour {
                     {
                         obj.transform.position = new Vector2(starfieldRect.xMin, Random.Range(starfieldRect.yMin, starfieldRect.yMax));
                     }
-
-
                 }
                 else
                 {
