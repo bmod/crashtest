@@ -71,10 +71,15 @@ internal struct IntBounds
         return new IntBounds
         {
             XMin = Mathf.Min(XMin, other.XMin),
-            XMax = Mathf.Min(XMax, other.XMax),
+            XMax = Mathf.Max(XMax, other.XMax),
             YMin = Mathf.Min(YMin, other.YMin),
-            YMax = Mathf.Min(YMax, other.YMax)
+            YMax = Mathf.Max(YMax, other.YMax)
         };
+    }
+
+    public string ToString()
+    {
+        return "min: " + XMin + ", " + YMin + ", max: " + XMax + ", " + YMax;
     }
 }
 
@@ -118,17 +123,11 @@ public class RandomSpawnArea : MonoBehaviour
     {
         var pointCount = 0;
         if (minSpawnPointsInCell == maxSpawnPointsInCell)
-        {
             pointCount = minSpawnPointsInCell;
-        }
         else if (maxSpawnPointsInCell < minSpawnPointsInCell)
-        {
             pointCount = 1;
-        }
         else
-        {
             pointCount = _rand.Range(minSpawnPointsInCell, maxSpawnPointsInCell, x, y);
-        }
         
         var pts = new SpawnPoint[pointCount];
         for (var i = 0; i < pointCount; i++)
@@ -182,6 +181,7 @@ public class RandomSpawnArea : MonoBehaviour
 
     public int Hash(int x, int y)
     {
+        if (x == 1) x = 1000000;
         unchecked // integer overflows are accepted here
         {
             int h = 0;
@@ -206,7 +206,7 @@ public class RandomSpawnArea : MonoBehaviour
                 if (_cellBounds.Contains(x, y) && newBounds.Contains(x, y))
                     continue; // Cell is in both rectangles, no need to update
 
-                if (newBounds.Contains(x, y) && !_cellBounds.Contains(x, y))
+                if (newBounds.Contains(x, y))
                 {
                     // New cell, create
                     CreateCell(x, y);
@@ -218,7 +218,7 @@ public class RandomSpawnArea : MonoBehaviour
 //                }
             }
         }
-
+        
 
         // Cleanup old cells, can be optimized (see above)
         var destroy = new List<int>();
