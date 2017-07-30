@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 
@@ -97,6 +98,10 @@ public class RandomSpawnArea : MonoBehaviour
     public int maxSpawnPointsInCell = 3;
     public int seed = 100;
     public bool DestroyOutOfBounds = true;
+    public bool Randomize = true;
+    public float ParallaxMultiplier = 1;
+    public bool DebugDraw = false;
+    public bool RandomOrientation = true;
 
     private Vector2 _anchor;
     private Rect _liveArea;
@@ -119,7 +124,9 @@ public class RandomSpawnArea : MonoBehaviour
         _liveArea.width = Camera.main.aspect * h * LiveAreaSizeMultiplier;
 
         // Center on camera
-        _liveArea.position = new Vector2(_anchor.x - _liveArea.width / 2, _anchor.y - _liveArea.height / 2);
+        _liveArea.position = new Vector2(_anchor.x - _liveArea.width / 2, _anchor.y - _liveArea.height / 2) * ParallaxMultiplier;
+        if (ParallaxMultiplier != 1)
+            transform.position = _anchor * (1-ParallaxMultiplier); 
         UpdateCells();
     }
 
@@ -152,12 +159,19 @@ public class RandomSpawnArea : MonoBehaviour
     {
         var go = gameObjects[Random.Range(0, gameObjects.Length)];
         var sp = new SpawnPoint();
-        sp.Pt = new Vector2(Random.value, Random.value);
+
+        var localPos = Vector2.one * .5f;
+        if (Randomize)
+            localPos = new Vector2(Random.value, Random.value);
+
+        sp.Pt = localPos;
         sp.instance = Instantiate(go);
+        sp.instance.transform.parent = transform;
         var pos = sp.Pt * CellSize + new Vector2(x, y) * CellSize;
-        var rot = Random.Range(0, 3) * 90;
-        sp.instance.transform.position = pos;
-        sp.instance.transform.Rotate(Vector3.forward * rot);
+
+        sp.instance.transform.localPosition = pos;
+        if (RandomOrientation) 
+            sp.instance.transform.Rotate(Vector3.forward * Random.Range(0, 3) * 90);
         sp.Index = i;
         return sp;
     }
@@ -234,6 +248,8 @@ public class RandomSpawnArea : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (!DebugDraw)
+            return;
 //        var xf = SceneView.lastActiveSceneView.camera.transform;
 //        _anchor = new Vector2(xf.position.x, xf.position.y);
 
