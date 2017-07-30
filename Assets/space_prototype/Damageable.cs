@@ -13,7 +13,7 @@ public class Damageable : MonoBehaviour {
 		currentHealth = maxHealth;
 	}
 
-	public void TakeDamage(int amount, Missile source) {
+	public void TakeDamage(int amount, DamageSource source) {
 
 		currentHealth -= amount;
 
@@ -45,10 +45,10 @@ public class Damageable : MonoBehaviour {
 		}
 	}
 
-	public delegate void DamageTakenAction(int amount, Missile source);
+	public delegate void DamageTakenAction(int amount, DamageSource source);
 	public event DamageTakenAction OnDamageTaken;
 
-	public delegate void KilledAction(Missile source);
+	public delegate void KilledAction(DamageSource source);
 	public event KilledAction OnKilled;
 
 }

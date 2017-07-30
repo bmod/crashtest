@@ -13,7 +13,7 @@ public class AstronautDeathEffects : MonoBehaviour {
 		astronautDamageable.OnKilled += GameOverOnKilled;
 	}
 
-	void GameOverOnKilled(Missile source) {
+	void GameOverOnKilled(DamageSource source) {
 		Debug.Log ("Game over mon!");
 		Destroy (astronautDamageable.gameObject);
 		Debug.LogError ("We need to update this function with Game over UI");
