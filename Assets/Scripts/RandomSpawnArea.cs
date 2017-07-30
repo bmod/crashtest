@@ -88,6 +88,7 @@ internal struct IntBounds
 public class RandomSpawnArea : MonoBehaviour
 {
     public float GradientRange = 10; // in cells
+    public AnimationCurve GradientCurve = new AnimationCurve();
     public bool UseGradientDistribution = false;
     public GameObject[] gameObjects;
     public float LiveAreaSizeMultiplier = 2;
@@ -190,7 +191,8 @@ public class RandomSpawnArea : MonoBehaviour
     
     private float GradientValue(int x, int y)
     {
-        return Mathf.Min(1, new Vector2(x,y).magnitude / GradientRange);
+        var d = new Vector2(x, y).magnitude;
+        return GradientCurve.Evaluate(d / GradientRange);
     }
     
     public int Hash(int x, int y)
