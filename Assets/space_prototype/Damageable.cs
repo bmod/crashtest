@@ -28,6 +28,14 @@ public class Damageable : MonoBehaviour {
 			if (OnKilled != null) {
 				OnKilled (source);
 			}
+
+			if (source is Missile) {
+				Missile missile = source as Missile;
+				if (missile.launcher is PlayerControls) {
+					PickupDropChanceManager.instance.PlayerShotSomethingDown (this);
+				}
+			}
+
 		}
 
 
@@ -35,12 +43,7 @@ public class Damageable : MonoBehaviour {
 			damagedAudio.Play ();
 		}
 			
-		if (source is Missile) {
-			Missile missile = source as Missile;
-			if (missile.launcher is PlayerControls) {
-				PickupDropChanceManager.instance.PlayerShotSomethingDown (this);
-			}
-		}
+
 	}
 
 	public void AddHealth(int h)
