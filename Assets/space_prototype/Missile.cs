@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public interface MissileLauncher {
+	
+}
+
 public class Missile : MonoBehaviour, DamageSource {
 
-	public int damageInflicted = 1;
+	public int damageInflicted = 5;
+
+	public  MissileLauncher launcher;
 
 	// Use this for initialization
 	void Start () {

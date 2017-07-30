@@ -7,6 +7,9 @@ public class Damageable : MonoBehaviour {
 	[SerializeField]
 	int currentHealth; 
 	public int maxHealth = 4;
+	public AudioSource damagedAudio;
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -24,6 +27,18 @@ public class Damageable : MonoBehaviour {
 		if (currentHealth <= 0) {
 			if (OnKilled != null) {
 				OnKilled (source);
+			}
+		}
+
+
+		if (damagedAudio != null) {
+			damagedAudio.Play ();
+		}
+			
+		if (source is Missile) {
+			Missile missile = source as Missile;
+			if (missile.launcher is PlayerControls) {
+				PickupDropChanceManager.instance.PlayerShotSomethingDown (this);
 			}
 		}
 	}

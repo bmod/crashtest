@@ -1,14 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class PlayerControls : MonoBehaviour {
-
-	public enum ControlMode
-	{
-		Classic, GamePad
-	}
-	
-	public ControlMode Controls = ControlMode.Classic;
+public class PlayerControls : MonoBehaviour, MissileLauncher {
 
 	KeyCode rotateGunCounterClockWise = KeyCode.LeftArrow;
 	KeyCode rotateGunClockwise = KeyCode.RightArrow;
@@ -33,16 +26,20 @@ public class PlayerControls : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
 		CheckForBoosterRotation ();
 		CheckForGunRotation ();
 		CheckForShot ();
 		CheckForBoost ();
-		// Gamepad controls can be used at the same time
-		CheckForBoosterRotationGamePad();
-		CheckForGunRotationGamePad();
-		CheckForShotGamePad();
+
+		// Gamepad controls can be used at the same time.
+
+//		CheckForBoosterRotationGamePad();
+//		CheckForGunRotationGamePad();
+//		CheckForShotGamePad();
 	}
+
+	public AudioSource boosterSoundLoop;
+	public AudioSource gunFireSound;
 
 	public GameObject missilePrefab;
 
@@ -65,12 +62,16 @@ public class PlayerControls : MonoBehaviour {
 		if (cooling)
 			return;
 		GameObject shot = Instantiate (missilePrefab);
+		shot.GetComponent<Missile> ().launcher = this;
 		shot.transform.position = barrelOpening.position;
 		Vector3 launchVel = UnitForward2DFromTransform (gunRotator) * bulletSpeed;
 		Vector3 starting = boosterRigidbody.GetComponent<Rigidbody2D> ().velocity;
 		shot.GetComponent<Rigidbody2D> ().velocity =  launchVel + starting;
 		StartCoroutine (Cooldown ());
 		StartCoroutine (KillBullet (shot));
+
+		gunFireSound.pitch = .7f + Random.Range (-.1f, .1f);
+		gunFireSound.Play ();
 	}
 
 	IEnumerator Cooldown() {
@@ -96,6 +97,8 @@ public class PlayerControls : MonoBehaviour {
 	public Rigidbody2D boosterRigidbody;
 	ParticleSystem.EmissionModule particleEmission;
 	public float boosterForceMagnitude = 8f;
+
+	[SerializeField]
 	bool boosting = false;
 	void CheckForBoost() {
 		if (Input.GetKey (boosterKey)) {
@@ -107,8 +110,14 @@ public class PlayerControls : MonoBehaviour {
 		}
 
 		if (boosting) {
+//			Debug.Log ("doing boosting!");
 			particleEmission.enabled = true;
+			if(!boosterSoundLoop.isPlaying) 
+				boosterSoundLoop.Play ();
+
 		} else {
+			boosterSoundLoop.Stop();
+//			Debug.Log ("nNOT boosting");
 			particleEmission.enabled = false;
 		}
 			
@@ -135,12 +144,17 @@ public class PlayerControls : MonoBehaviour {
 		if (inputMagnitude > 0.2f)
 		{
 			var currentAngle = boosterRotator.eulerAngles.z;
-			var targetAngle = Mathf.Atan2(leftSticKVec.y, leftSticKVec.x)* Mathf.Rad2Deg - 90;
+			var targetAngle = Mathf.Atan2(leftSticKVec.y, leftSticKVec.x) * Mathf.Rad2Deg - 90;
 			var newAngle = Mathf.MoveTowardsAngle(currentAngle, targetAngle, Time.deltaTime * boosterRotateSpeed);
-			boosterRotator.rotation = Quaternion.Euler(0, 0, newAngle );
+			boosterRotator.rotation = Quaternion.Euler(0, 0, newAngle);
 
-			var force = UnitForward2DFromTransform (boosterRotator) * boosterForceMagnitude * inputMagnitude;
-			boosterRigidbody.AddForce (force);
+			var force = UnitForward2DFromTransform(boosterRotator) * boosterForceMagnitude * inputMagnitude;
+			boosterRigidbody.AddForce(force);
+			particleEmission.enabled = true;
+		}
+		else
+		{
+			particleEmission.enabled = false;
 		}
 	}
 

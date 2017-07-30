@@ -50,7 +50,7 @@ public class PowerRunningOut : MonoBehaviour {
 		StartCoroutine (RestartScene ());
 	}
 	IEnumerator RestartScene() {
-		yield return new WaitForSeconds (2f);
+		yield return new WaitForSeconds (4f);
 		SceneManager.LoadScene (0);
 	}
 

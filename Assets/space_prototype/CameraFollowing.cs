@@ -31,6 +31,9 @@ public class CameraFollowing : MonoBehaviour
 
 	public float shakeMagnitude = .2f;
 	void ShakeOnDamaged(int amount, DamageSource source) {
+		if (isShaking) {
+			return;
+		}
 		DoShake (shakeMagnitude, .5f, null);
 	}
 
@@ -58,7 +61,9 @@ public class CameraFollowing : MonoBehaviour
 
 	}
 
+	bool isShaking;
 	private IEnumerator ShakeProcess(float magnitude, float duration, AnimationCurve curve) {
+		isShaking = true;
 		if (curve == null) {
 			curve = AnimationCurve.EaseInOut (0f, 1f, 1f, 0f);
 		}
@@ -82,7 +87,7 @@ public class CameraFollowing : MonoBehaviour
 			timeRunning += Time.deltaTime;
 			yield return new WaitForEndOfFrame ();
 		}
-
+		isShaking = false;
 		shakingOffset = Vector3.zero;
 	}
 
