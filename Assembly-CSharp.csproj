@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\DebugEnteredCollisions.cs" />
+     <Compile Include="Assets\GenericDeathEffect.cs" />
      <Compile Include="Assets\HatcherySensor.cs" />
+     <Compile Include="Assets\HurtPlayerOnCollision.cs" />
      <Compile Include="Assets\MiteDeath.cs" />
      <Compile Include="Assets\MiteHatchery.cs" />
      <Compile Include="Assets\MiteSeeking.cs" />

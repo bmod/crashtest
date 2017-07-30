@@ -18,6 +18,10 @@ public class PowerRunningOut : MonoBehaviour {
 	public void AddPower(float amount)
 	{
 		power = Mathf.Min(power + amount, maxPower);
+
+		if (OnGainedPower != null) {
+			OnGainedPower (amount);
+		}
 	}
 
 	IEnumerator DecreasePower() {
@@ -37,6 +41,10 @@ public class PowerRunningOut : MonoBehaviour {
 
 	public delegate void LostPowerAction (float amount);
 	public event LostPowerAction OnLostPower;
+
+
+	public delegate void GainedPowerAction (float amount);
+	public event GainedPowerAction OnGainedPower;
 
 	void GameOver() {
 		StartCoroutine (RestartScene ());
