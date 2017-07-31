@@ -15,8 +15,8 @@ public class StarfieldScript : MonoBehaviour {
     public float starTimeout = 1;
     public float rangeLow = -1.0f;
     public float rangeHigh = 1.0f;
-    public float starScaleMinLayer1 = 0.1f;
-    public float starScaleMaxLayer1 = 0.3f;
+    public float starScaleMinLayer1 = 0.3f;
+    public float starScaleMaxLayer1 = 0.5f;
     public float starScaleMinLayer2 = 0.2f;
     public float starScaleMaxLayer2 = 0.3f;
     public float starScaleMinLayer3 = 0.08f;
@@ -86,23 +86,14 @@ public class StarfieldScript : MonoBehaviour {
             {
                 obj = starPool.GetPooledObject();
                 float roll = Random.value;
-                if (roll < 0.12f)
-                {
-                    obj.GetComponent<SpriteRenderer>().color = Color.red;
-                }
-                else if (roll < 0.2f)
-                {
-                    obj.GetComponent<SpriteRenderer>().color = Color.cyan;
-                }
-                else if (roll < 0.4f)
-                {
-                    obj.GetComponent<SpriteRenderer>().color = Color.grey;
-                }
-                else
+                if (roll < 0.5f)
                 {
                     obj.GetComponent<SpriteRenderer>().color = Color.white;
                 }
-                obj.transform.position = new Vector2(i + Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
+                else
+                {
+                    obj.GetComponent<SpriteRenderer>().color = Color.grey;
+                }                obj.transform.position = new Vector2(i + Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
                 float randScale = Random.Range(starScaleMinLayer2, starScaleMaxLayer2);
                 obj.transform.localScale = new Vector3(randScale, randScale, randScale);
                 obj.SetActive(true);
@@ -119,11 +110,11 @@ public class StarfieldScript : MonoBehaviour {
             {
                 obj = starPool.GetPooledObject();
                 float roll = Random.value;
-                if (roll < 0.12f)
+                if (roll < 0.08f)
                 {
                     obj.GetComponent<SpriteRenderer>().color = Color.red;
                 }
-                else if (roll < 0.2f)
+                else if (roll < 0.15f)
                 {
                     obj.GetComponent<SpriteRenderer>().color = Color.cyan;
                 }

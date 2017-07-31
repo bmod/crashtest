@@ -18,7 +18,7 @@ public class PlayerControls : MonoBehaviour, MissileLauncher {
 	public Transform astronaut;
 
 
-	public ParticleSystem boosterParticles;
+	public SpriteRenderer boosterAnimation;
 
 	KeyCode gunShotKey = KeyCode.UpArrow;
 	public Transform barrelOpening;
@@ -95,15 +95,12 @@ public class PlayerControls : MonoBehaviour, MissileLauncher {
 		return fwd;
 	}
 
-	void Start() {
-		particleEmission = boosterParticles.emission;
-	}
 
 	bool boosting = false;
 	void HandleBoost()
 	{
-		particleEmission.enabled = boosting;
-		
+//		particleEmission.enabled = boosting;
+		boosterAnimation.enabled = boosting;
 		if (boosting && !boosterSoundLoop.isPlaying)
 			boosterSoundLoop.Play();
 		if (!boosting && boosterSoundLoop.isPlaying)
@@ -111,7 +108,7 @@ public class PlayerControls : MonoBehaviour, MissileLauncher {
 	}
 
 	public Rigidbody2D boosterRigidbody;
-	ParticleSystem.EmissionModule particleEmission;
+//	ParticleSystem.EmissionModule particleEmission;
 	public float boosterForceMagnitude = 8f;
 
 	[SerializeField]
