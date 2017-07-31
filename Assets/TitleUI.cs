@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class TitleUI : MonoBehaviour {
 
 
@@ -15,6 +16,8 @@ public class TitleUI : MonoBehaviour {
 	}
 
 	public void QuitGame() {
+		
+		
 		Debug.Log ("quit clicked!");
 		Application.Quit ();
 	}
@@ -22,7 +25,6 @@ public class TitleUI : MonoBehaviour {
 	public void ShowInstructions() {
 		mainTitleMenu.gameObject.SetActive(false);
 		instructionsWindow.gameObject.SetActive (true);
-
 	}
 
 }
