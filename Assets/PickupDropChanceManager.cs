@@ -1,24 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class PickupDropChanceManager : MonoBehaviour {
 
 	public static PickupDropChanceManager instance;
 
+	public string[] exclusionsByTag;
 
 	void Awake() {
 		if (instance != null) {
 			Destroy (this);
-			Debug.LogError ("Had to destroy dup " + GetType().ToString());
+//			Debug.LogError ("Had to destroy dup " + GetType().ToString());
 		} else {
 			
 			SetNext ();
 			instance = this;	
 		}
-
-
-
 	}
 
 	int spawnpatternIndex = 0;
@@ -26,8 +25,8 @@ public class PickupDropChanceManager : MonoBehaviour {
 
 
 	//This could scale up with difficulty
-	public int baseFrequency = 15;
-	public int fudgeFactor = 3;
+	public int baseFrequency = 8;
+	public int fudgeFactor = 2;
 	[SerializeField]
 	private int nextIn;
 
@@ -40,7 +39,10 @@ public class PickupDropChanceManager : MonoBehaviour {
 	}
 
 	public void PlayerShotSomethingDown(Damageable thing) {
-		Debug.Log ("Player shot down: " + thing.name);	
+		if(exclusionsByTag.ToList().Contains(thing.tag)) {
+			return;
+		}
+
 		nextIn--;
 
 		if (nextIn <= 0) {
