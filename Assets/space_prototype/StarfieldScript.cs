@@ -68,7 +68,6 @@ public class StarfieldScript : MonoBehaviour {
             for (float j = length/2; j < starfieldHeight; j+=length)
             {
                 obj = starPool.GetPooledObject();
-                obj.GetComponent<SpriteRenderer>().color = Color.white;
                 obj.transform.position = new Vector2(i+Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
                 float randScale = Random.Range(starScaleMinLayer1, starScaleMaxLayer1);
                 obj.transform.localScale = new Vector3(randScale, randScale, randScale);
@@ -86,8 +85,12 @@ public class StarfieldScript : MonoBehaviour {
             {
                 obj = starPool.GetPooledObject();
                 float roll = Random.value;
-                if (roll < 0.5f)
+                if (roll < 0.15f)
                 {
+                    obj.GetComponent<SpriteRenderer>().color = Color.cyan;
+                }
+                else if (roll < 0.5f)
+                { 
                     obj.GetComponent<SpriteRenderer>().color = Color.white;
                 }
                 else
@@ -110,15 +113,15 @@ public class StarfieldScript : MonoBehaviour {
             {
                 obj = starPool.GetPooledObject();
                 float roll = Random.value;
-                if (roll < 0.08f)
+                if (roll < 0.1f)
                 {
                     obj.GetComponent<SpriteRenderer>().color = Color.red;
                 }
-                else if (roll < 0.15f)
+                else if (roll < 0.35f)
                 {
                     obj.GetComponent<SpriteRenderer>().color = Color.cyan;
                 }
-                else if (roll < 0.4f)
+                else if (roll < 0.7f)
                 {
                     obj.GetComponent<SpriteRenderer>().color = Color.grey;
                 }
