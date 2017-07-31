@@ -88,10 +88,12 @@ public class UIManager : MonoBehaviour {
 
 	public void BackToTitle() {
 		SceneManager.LoadScene ("Title");	
+		MusicManager.instance.PlayConfirm ();
 		MusicManager.instance.FadeMusicPitchUp ();
 	}
 
 	public void Retry() {
+		MusicManager.instance.PlayConfirm ();
 		SceneManager.LoadScene ("SpaceMan");
 		MusicManager.instance.FadeMusicPitchUp();
 	}

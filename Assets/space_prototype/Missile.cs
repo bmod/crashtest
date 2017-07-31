@@ -27,6 +27,9 @@ public class Missile : MonoBehaviour, DamageSource {
 		if (damageable != null) {
 			damageable.TakeDamage (damageInflicted, this);
 
+			Rigidbody2D rgbdy = damageable.GetComponent<Rigidbody2D> ();
+
+			rgbdy.AddForceAtPosition (GetComponent<Rigidbody2D>().velocity.normalized * 2f, transform.position);
 			Destroy (gameObject);
 		}
 
