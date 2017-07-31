@@ -24,9 +24,9 @@ public class StarfieldScript : MonoBehaviour {
     public float edgeSpawnMin = 0f;
     public float edgeSpawnMax = 3f;
 
-    public GameObjectPooler starPool;
-    public GameObject camera;
-    public GameObject player;
+    private GameObjectPooler starPool;
+    private GameObject camera;
+    private GameObject player;
 
     public List<GameObject> layer1;
     public List<GameObject> layer2;
@@ -40,7 +40,13 @@ public class StarfieldScript : MonoBehaviour {
     void Start () {
         //Get Pool
         starPool = GameObjectPooler.current;
- 
+
+        //Get camera
+        camera = GameObject.Find("Main Camera");
+
+        //Get drone
+        player = GameObject.Find("Drone");
+
         //Generate Rect for Starfield bounds
         starfieldRect.height = starfieldHeight;
         starfieldRect.width = starfieldWidth;
