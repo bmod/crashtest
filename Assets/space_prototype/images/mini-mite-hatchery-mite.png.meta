@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: dec133112b62e448bb8d10dafdf6b0cb
-timeCreated: 1501473957
+guid: 9ff364c1f0eba46538ddaf13f4b6e8b7
+timeCreated: 1501475166
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: mini-mites-sheet-01_0
-    21300002: mini-mites-sheet-01_1
-    21300004: mini-mites-sheet-01_2
+    21300000: mini-mite-hatchery-mite_0
+    21300002: mini-mite-hatchery-mite_1
+    21300004: mini-mite-hatchery-mite_2
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -73,39 +73,39 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mini-mites-sheet-01_0
+      name: mini-mite-hatchery-mite_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: mini-mite-hatchery-mite_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: mini-mite-hatchery-mite_2
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: mini-mites-sheet-01_1
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: mini-mites-sheet-01_2
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 16
-        height: 16
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
