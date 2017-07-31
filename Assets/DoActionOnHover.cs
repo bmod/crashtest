@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChangeTextColorOnHover : MonoBehaviour {
+public class DoActionOnHover : MonoBehaviour {
 
 
 	public Text text;
 	public Color hoverColor;
+    public AudioSource onHoverSound;
+    public AudioSource onMenuConfirm;
+
 	Color ogColor;
 	// Use this for initialization
 	void Start () {
@@ -17,9 +20,15 @@ public class ChangeTextColorOnHover : MonoBehaviour {
 
 	public void MouseIn() {
 		text.color = hoverColor;
+        onHoverSound.Play();
 	}
 
 	public void MouseOut() {
 		text.color = ogColor;
 	}
+
+    public void ConfirmMenuItem()
+    {
+        onMenuConfirm.Play();
+    }
 }
