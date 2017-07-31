@@ -8,6 +8,8 @@ public class MusicManager : MonoBehaviour {
 	public static MusicManager instance;
 
 	AudioSource musicSource;
+	public AudioSource menuConfirm;
+
 
 	void Awake() {
 		if (instance != null) {
@@ -19,6 +21,10 @@ public class MusicManager : MonoBehaviour {
 			instance = this;
 			DontDestroyOnLoad (this);
 		}
+	}
+
+	public void PlayConfirm() {
+		menuConfirm.Play ();
 	}
 
 	public float gameOverMusicPitch = .7f;

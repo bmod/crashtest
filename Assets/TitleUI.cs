@@ -12,6 +12,7 @@ public class TitleUI : MonoBehaviour {
 
 	public void StartGame() {
 		Debug.Log ("start clicked!");
+		MusicManager.instance.PlayConfirm ();
 		SceneManager.LoadScene ("SpaceMan");
 	}
 
@@ -19,6 +20,7 @@ public class TitleUI : MonoBehaviour {
 		
 		
 		Debug.Log ("quit clicked!");
+		MusicManager.instance.PlayConfirm ();
 		Application.Quit ();
 	}
 
