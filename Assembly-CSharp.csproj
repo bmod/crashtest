@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\DebugEnteredCollisions.cs" />
+     <Compile Include="Assets\FadeInOutSprite.cs" />
      <Compile Include="Assets\GenericDeathEffect.cs" />
      <Compile Include="Assets\HatcherySensor.cs" />
      <Compile Include="Assets\HurtPlayerOnCollision.cs" />
