@@ -49,7 +49,7 @@ public class CameraFollowing : MonoBehaviour
 
 
 
-	private Vector3 shakingOffset = Vector3.zero;
+	private Vector3 shakingOffset = Vector2.zero;
 
 	Coroutine lastShakeRoutine;
 	public void DoShake(float magnitude, float duration, AnimationCurve curve) {
@@ -79,8 +79,7 @@ public class CameraFollowing : MonoBehaviour
 
 			//			Debug.Log("offset possible evaled: " + offsetPossible);
 
-			shakingOffset = new Vector3 (
-				Random.Range(-offsetPossible, offsetPossible), 
+			shakingOffset = new Vector2 (
 				Random.Range(-offsetPossible, offsetPossible), 
 				Random.Range(-offsetPossible, offsetPossible));
 
@@ -88,7 +87,7 @@ public class CameraFollowing : MonoBehaviour
 			yield return new WaitForEndOfFrame ();
 		}
 		isShaking = false;
-		shakingOffset = Vector3.zero;
+		shakingOffset = Vector2.zero;
 	}
 
 }
