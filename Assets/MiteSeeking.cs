@@ -29,11 +29,14 @@ public class MiteSeeking : MonoBehaviour, DamageSource {
 	bool attackingSet = false;
 
 	void CheckForAnimChange() {
+		
 		if (InAttackRange () && !attackingSet) {
+			Debug.Log ("going to attacking !!!!");
 			attackingSet = true;
 			GetComponent<Animator> ().SetTrigger ("Attack");
 		} else if(attackingSet && !InAttackRange()) {
 			attackingSet = false;
+			Debug.Log ("going to seeking !!!!");
 			GetComponent<Animator> ().SetTrigger ("Seek");
 		}
 	}
@@ -46,7 +49,7 @@ public class MiteSeeking : MonoBehaviour, DamageSource {
 			return false;
 		}
 		bool inr = distanceToChangeToAttacking * distanceToChangeToAttacking >
-		(PlayerControls.instance.astronaut.position - transform.position).sqrMagnitude;
+			(PlayerControls.instance.astronaut.position - new Vector3(transform.position.x, transform.position.y, 0f)).sqrMagnitude;
 		return inr;
 	}
 
@@ -56,7 +59,6 @@ public class MiteSeeking : MonoBehaviour, DamageSource {
 		Collider2D player = PlayerControls.instance.astronaut.GetComponent<Collider2D> ();
 		if (GetComponent<Collider2D> ().IsTouching (player)) {
 
-			Debug.Log ("damag!");
 			player.GetComponent<Damageable> ().TakeDamage (1, this);
 			Rigidbody2D playerRgbd = player.GetComponent<Rigidbody2D> ();
 			playerRgbd.velocity = playerRgbd.velocity * (1f - slowOnAttackFactor);
