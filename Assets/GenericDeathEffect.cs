@@ -37,11 +37,18 @@ public class GenericDeathEffect : MonoBehaviour {
 		}
 	}
 
-
+	public GameObject spawnOnDeath;
 
 	IEnumerator DelayDestroy() {
+		
 		if(deathAudio != null)
 			deathAudio.Play();
+		if (spawnOnDeath != null) {
+			GameObject go = Instantiate (spawnOnDeath);
+			go.transform.SetParent (transform.parent);
+			go.transform.position = transform.position;
+		}
+
 		yield return new WaitForSeconds (3f);
 		Destroy (gameObject);
 	}
