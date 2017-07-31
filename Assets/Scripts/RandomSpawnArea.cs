@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
-using NUnit.Framework;
-using NUnit.Framework.Constraints;
+//using NUnit.Framework;
+//using NUnit.Framework.Constraints;
 using UnityEngine;
 
 
@@ -103,9 +103,11 @@ public class RandomSpawnArea : MonoBehaviour
     public bool DebugDraw = false;
     public bool RandomOrientation = true;
 
+
     private Vector2 _anchor;
     private Rect _liveArea;
-    private HashFunction _rand;
+    
+	private HashFunction _rand;
 
     private IntBounds _cellBounds;
     private readonly Dictionary<int, Cell> _cells = new Dictionary<int, Cell>();
