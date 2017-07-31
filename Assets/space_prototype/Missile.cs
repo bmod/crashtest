@@ -23,6 +23,10 @@ public class Missile : MonoBehaviour, DamageSource {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
+		if (other.CompareTag ("CameraEdge")) {
+			Destroy (gameObject);
+			return;
+		}
 		Damageable damageable = other.GetComponent<Damageable> ();
 		if (damageable != null) {
 			damageable.TakeDamage (damageInflicted, this);
