@@ -46,8 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\ChangeTextColorOnHover.cs" />
      <Compile Include="Assets\DebugEnteredCollisions.cs" />
+     <Compile Include="Assets\DoActionOnHover.cs" />
      <Compile Include="Assets\FadeInOutSprite.cs" />
      <Compile Include="Assets\GenericDeathEffect.cs" />
      <Compile Include="Assets\HatcherySensor.cs" />
