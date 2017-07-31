@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Xml.Serialization;
-//using NUnit.Framework;
-//using NUnit.Framework.Constraints;
 using UnityEngine;
 
 
@@ -107,7 +104,7 @@ public class RandomSpawnArea : MonoBehaviour
     private Vector2 _anchor;
     private Rect _liveArea;
     
-	private HashFunction _rand;
+	private HashFunction _rand = new XXHash(0);
 
     private IntBounds _cellBounds;
     private readonly Dictionary<int, Cell> _cells = new Dictionary<int, Cell>();
@@ -126,9 +123,9 @@ public class RandomSpawnArea : MonoBehaviour
         _liveArea.width = Camera.main.aspect * h * LiveAreaSizeMultiplier;
 
         // Center on camera
-        _liveArea.position = new Vector2(_anchor.x - _liveArea.width / 2, _anchor.y - _liveArea.height / 2) * ParallaxMultiplier;
-        if (ParallaxMultiplier != 1)
-            transform.position = _anchor * (1-ParallaxMultiplier); 
+        _liveArea.position = new Vector2(_anchor.x - _liveArea.width / 2, _anchor.y - _liveArea.height / 2);
+        if (ParallaxMultiplier != 0)
+            transform.position = _anchor * (ParallaxMultiplier); 
         UpdateCells();
     }
 
@@ -159,7 +156,6 @@ public class RandomSpawnArea : MonoBehaviour
 
     private SpawnPoint CreateSpawnPoint(int x, int y, int i)
     {
-        var go = gameObjects[Random.Range(0, gameObjects.Length)];
         var sp = new SpawnPoint();
 
         var localPos = Vector2.one * .5f;
@@ -167,13 +163,18 @@ public class RandomSpawnArea : MonoBehaviour
             localPos = new Vector2(Random.value, Random.value);
 
         sp.Pt = localPos;
-        sp.instance = Instantiate(go);
-        sp.instance.transform.parent = transform;
         var pos = sp.Pt * CellSize + new Vector2(x, y) * CellSize;
+        
+        if (gameObjects.Length > 0)
+        {
+            var go = gameObjects[Random.Range(0, gameObjects.Length)];
+            sp.instance = Instantiate(go);
+            sp.instance.transform.parent = transform;
+            sp.instance.transform.localPosition = pos;
+            if (RandomOrientation) 
+                sp.instance.transform.Rotate(Vector3.forward * Random.Range(0, 3) * 90);
+        }
 
-        sp.instance.transform.localPosition = pos;
-        if (RandomOrientation) 
-            sp.instance.transform.Rotate(Vector3.forward * Random.Range(0, 3) * 90);
         sp.Index = i;
         return sp;
     }
@@ -218,7 +219,10 @@ public class RandomSpawnArea : MonoBehaviour
 
     private void UpdateCells()
     {
-        var newBounds = IntBounds.FromRect(_liveArea, CellSize);
+
+        var r = _liveArea;
+        r.position -= (_liveArea.position + _liveArea.size/2) * ParallaxMultiplier;
+        var newBounds = IntBounds.FromRect(r, CellSize);
         if (_cellBounds == newBounds)
             return; // Same cell bounds, do nothing
 
@@ -252,12 +256,15 @@ public class RandomSpawnArea : MonoBehaviour
     {
         if (!DebugDraw)
             return;
-//        var xf = SceneView.lastActiveSceneView.camera.transform;
-//        _anchor = new Vector2(xf.position.x, xf.position.y);
+        
+        Update();
 
+        
         Gizmos.color = Color.yellow;
         DrawRect(_liveArea);
 
+
+        Gizmos.matrix = transform.localToWorldMatrix;
         foreach (var c in _cells.Values)
         {
             Gizmos.color = Color.blue;

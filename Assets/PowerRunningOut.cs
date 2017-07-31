@@ -25,7 +25,7 @@ public class PowerRunningOut : MonoBehaviour {
 	}
 
 	IEnumerator DecreasePower() {
-		yield return new WaitForSeconds (1f);
+		yield return new WaitForSeconds (1.2f);
 		power -= 1f;
 
 		if (OnLostPower != null) {
