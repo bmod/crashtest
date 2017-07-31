@@ -47,11 +47,8 @@ public class PowerRunningOut : MonoBehaviour {
 	public event GainedPowerAction OnGainedPower;
 
 	void GameOver() {
-		StartCoroutine (DelayGameOverSeq ());
-	}
-	IEnumerator DelayGameOverSeq() {
-		yield return new WaitForSeconds (4f);
 		UIManager.instance.PresentGameOver ();
+
 	}
 
 

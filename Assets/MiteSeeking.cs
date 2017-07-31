@@ -29,18 +29,19 @@ public class MiteSeeking : MonoBehaviour, DamageSource {
 	bool attackingSet = false;
 
 	void CheckForAnimChange() {
-		if (InRange () && !attackingSet) {
+		if (InAttackRange () && !attackingSet) {
 			attackingSet = true;
 			GetComponent<Animator> ().SetTrigger ("Attack");
-		} else if(attackingSet && !InRange()) {
+		} else if(attackingSet && !InAttackRange()) {
 			attackingSet = false;
 			GetComponent<Animator> ().SetTrigger ("Seek");
 		}
 	}
 
+	public float slowOnAttackFactor = .5f;
 
 
-	bool InRange() {
+	bool InAttackRange() {
 		if (PlayerControls.instance.astronaut == null) {
 			return false;
 		}
@@ -57,20 +58,29 @@ public class MiteSeeking : MonoBehaviour, DamageSource {
 
 			Debug.Log ("damag!");
 			player.GetComponent<Damageable> ().TakeDamage (1, this);
+			Rigidbody2D playerRgbd = player.GetComponent<Rigidbody2D> ();
+			playerRgbd.velocity = playerRgbd.velocity * (1f - slowOnAttackFactor);
+
 		} else {
 			Debug.Log ("Not overlaping!");
 		}
 	}
 
 	public Vector3 lastPosition;
+	public float maxVelocity = 5f;
 	void Seek() {
 		lastPosition = PlayerControls.instance.astronaut.position;
 		Vector2 directions = PlayerControls.instance.astronaut.position - transform.position;
 
-		directions = directions + PlayerControls.instance.astronaut.GetComponent<Rigidbody2D> ().velocity;
+		if (!InAttackRange ()) {
+			directions = directions + PlayerControls.instance.astronaut.GetComponent<Rigidbody2D> ().velocity;
+		} 
+
 
 		directions = directions.normalized * seekPower;
 		GetComponent<Rigidbody2D> ().AddForce (new Vector2 (directions.x, directions.y));
+
+
 	}
 
 	void SeekLastPosition() {

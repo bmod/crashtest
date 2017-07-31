@@ -9,18 +9,23 @@ public class StarfieldScript : MonoBehaviour {
     public int numOfStarsLayer3 = 100;
     public int starfieldHeight = 20;
     public int starfieldWidth = 30;
-    public float layer1Speed = 0.5f;
-    public float layer2Speed = 0.25f;
-    public float layer3Speed = 0.001f;
+    public float layer1Speed = 0.4f;
+    public float layer2Speed = 0.03f;
+    public float layer3Speed = 0.01f;
     public float starTimeout = 1;
     public float rangeLow = -1.0f;
     public float rangeHigh = 1.0f;
-    public float starScaleMin = 0.08f;
-    public float starScaleMax = 0.5f;
+    public float starScaleMinLayer1 = 0.1f;
+    public float starScaleMaxLayer1 = 0.3f;
+    public float starScaleMinLayer2 = 0.2f;
+    public float starScaleMaxLayer2 = 0.3f;
+    public float starScaleMinLayer3 = 0.08f;
+    public float starScaleMaxLayer3 = 0.1f;
     public float edgeSpawnMin = 0f;
     public float edgeSpawnMax = 3f;
 
     public GameObjectPooler starPool;
+    public GameObject camera;
     public GameObject player;
 
     public List<GameObject> layer1;
@@ -41,13 +46,9 @@ public class StarfieldScript : MonoBehaviour {
         starfieldRect.width = starfieldWidth;
 
         starfieldOffset = new Vector3(starfieldRect.width / 2.0f, starfieldRect.height / 2.0f);
-        
 
-		if (player == null) {
-			starfieldRect.position = transform.position;
-		} else {
-			starfieldRect.position = player.transform.position + starfieldOffset;
-		}
+        starfieldRect.position = camera.transform.position + starfieldOffset;
+		
 
         GameObject obj;
 
@@ -67,8 +68,9 @@ public class StarfieldScript : MonoBehaviour {
             for (float j = length/2; j < starfieldHeight; j+=length)
             {
                 obj = starPool.GetPooledObject();
+                obj.GetComponent<SpriteRenderer>().color = Color.white;
                 obj.transform.position = new Vector2(i+Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
-                float randScale = Random.Range(starScaleMin, starScaleMax);
+                float randScale = Random.Range(starScaleMinLayer1, starScaleMaxLayer1);
                 obj.transform.localScale = new Vector3(randScale, randScale, randScale);
                 obj.SetActive(true);
                 layer1.Add(obj);
@@ -83,8 +85,25 @@ public class StarfieldScript : MonoBehaviour {
             for (float j = length / 2; j < starfieldHeight; j += length)
             {
                 obj = starPool.GetPooledObject();
+                float roll = Random.value;
+                if (roll < 0.12f)
+                {
+                    obj.GetComponent<SpriteRenderer>().color = Color.red;
+                }
+                else if (roll < 0.2f)
+                {
+                    obj.GetComponent<SpriteRenderer>().color = Color.cyan;
+                }
+                else if (roll < 0.4f)
+                {
+                    obj.GetComponent<SpriteRenderer>().color = Color.grey;
+                }
+                else
+                {
+                    obj.GetComponent<SpriteRenderer>().color = Color.white;
+                }
                 obj.transform.position = new Vector2(i + Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
-                float randScale = Random.Range(starScaleMin, starScaleMax);
+                float randScale = Random.Range(starScaleMinLayer2, starScaleMaxLayer2);
                 obj.transform.localScale = new Vector3(randScale, randScale, randScale);
                 obj.SetActive(true);
                 layer2.Add(obj);
@@ -99,8 +118,25 @@ public class StarfieldScript : MonoBehaviour {
             for (float j = length / 2; j < starfieldHeight; j += length)
             {
                 obj = starPool.GetPooledObject();
+                float roll = Random.value;
+                if (roll < 0.12f)
+                {
+                    obj.GetComponent<SpriteRenderer>().color = Color.red;
+                }
+                else if (roll < 0.2f)
+                {
+                    obj.GetComponent<SpriteRenderer>().color = Color.cyan;
+                }
+                else if (roll < 0.4f)
+                {
+                    obj.GetComponent<SpriteRenderer>().color = Color.grey;
+                }
+                else
+                {
+                    obj.GetComponent<SpriteRenderer>().color = Color.white;
+                }
                 obj.transform.position = new Vector2(i + Random.Range(rangeLow, rangeHigh), j + Random.Range(rangeLow, rangeHigh)) - starfieldRect.position;
-                float randScale = Random.Range(starScaleMin, starScaleMax);
+                float randScale = Random.Range(starScaleMinLayer3, starScaleMaxLayer3);
                 obj.transform.localScale = new Vector3(randScale, randScale, randScale);
                 obj.SetActive(true);
                 layer3.Add(obj);
@@ -110,19 +146,19 @@ public class StarfieldScript : MonoBehaviour {
 
 
     void Update() {
-		if (player == null)
+		if (camera == null)
 			return;
         //Center starfield rect on player
-        starfieldRect.position = player.transform.position - starfieldOffset;
+        starfieldRect.position = camera.transform.position - starfieldOffset;
 
         //Store player position delta
-        deltaPosition = lastPosition - player.transform.position;
-        lastPosition = player.transform.position;
+        deltaPosition = lastPosition - camera.transform.position;
+        lastPosition = camera.transform.position;
 
         //Update 1st layer
         for (int i = layer1.Count - 1; i >= 0; i--)
         {
-            layer1[i].transform.position += (deltaPosition * layer1Speed);
+            layer1[i].transform.position += (deltaPosition * layer1Speed) - deltaPosition;
             StarLife script = layer1[i].GetComponent<StarLife>();
 
             if (!starfieldRect.Contains(layer1[i].transform.position))
@@ -145,7 +181,7 @@ public class StarfieldScript : MonoBehaviour {
         //Update 2nd Layer
         for (int i = layer2.Count - 1; i >= 0; i--)
         {
-            layer2[i].transform.position += (deltaPosition * layer2Speed);
+            layer2[i].transform.position += (deltaPosition * layer2Speed) - deltaPosition;
             StarLife script = layer2[i].GetComponent<StarLife>();
 
             if (!starfieldRect.Contains(layer2[i].transform.position))
@@ -168,7 +204,7 @@ public class StarfieldScript : MonoBehaviour {
         //Update 3rd Layer
         for (int i = layer3.Count - 1; i >= 0; i--)
         {
-            layer3[i].transform.position += (deltaPosition * layer3Speed);
+            layer3[i].transform.position += (deltaPosition * layer3Speed) - deltaPosition;
             StarLife script = layer3[i].GetComponent<StarLife>();
 
             if (!starfieldRect.Contains(layer3[i].transform.position))
@@ -250,8 +286,6 @@ public class StarfieldScript : MonoBehaviour {
                     }
                 }
             }
-            float randScale = Random.Range(starScaleMin, starScaleMax);
-            obj.transform.localScale = new Vector3(randScale, randScale, randScale);
             obj.SetActive(true);
             layer1.Add(obj);
         }
@@ -320,7 +354,6 @@ public class StarfieldScript : MonoBehaviour {
                     }
                 }
             }
-            float randScale = Random.Range(starScaleMin, starScaleMax);
             obj.SetActive(true);
             layer2.Add(obj);
         }
@@ -395,7 +428,6 @@ public class StarfieldScript : MonoBehaviour {
                     }
                 }
             }
-            float randScale = Random.Range(starScaleMin, starScaleMax);
             obj.SetActive(true);
             layer3.Add(obj);
         }
