@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
 
 public class PickupDropChanceManager : MonoBehaviour {
 
 	public static PickupDropChanceManager instance;
 	public int score;
-
+	public Text scoreText;
 
 	public string[] exclusionsByTag;
 
@@ -53,6 +54,8 @@ public class PickupDropChanceManager : MonoBehaviour {
 		if (nextIn <= 0) {
 			DoPickupSpawn (thing.transform.position);
 		}
+
+		scoreText.text = "Score: " + score;
 	}
 
 	void DoPickupSpawn(Vector3 loc) {
