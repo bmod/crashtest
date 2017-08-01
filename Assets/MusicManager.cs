@@ -12,6 +12,7 @@ public class MusicManager : MonoBehaviour {
 
 
 	void Awake() {
+		Screen.SetResolution (1600, 900, true);
 		if (instance != null) {
 			Destroy (this);
 			Debug.LogError ("Can't have multiple " + GetType () + "!");
