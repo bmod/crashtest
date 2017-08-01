@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: 5dc65dd05e7ab4294b1b02ce71d6a96a
-timeCreated: 1501399346
+guid: 3831bc3b92a3646eeb15c63a1e7becc8
+timeCreated: 1501600540
 licenseType: Pro
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: UI-bars_0
-    21300002: UI-bars_1
-    21300004: UI-bars_2
-    21300006: UI-bars_3
-    21300008: UI-bars_4
+  fileIDToRecycleName: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -32,20 +27,20 @@ TextureImporter:
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
-    filterMode: 0
+    filterMode: -1
     aniso: -1
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 100
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -89,72 +84,7 @@ TextureImporter:
     overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: UI-bars_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 30
-        width: 52
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: UI-bars_1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 30
-        width: 52
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: UI-bars_2
-      rect:
-        serializedVersion: 2
-        x: 33
-        y: 4
-        width: 14
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 3, y: 1, z: 3, w: 1}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: UI-bars_3
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 4
-        width: 14
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: UI-bars_4
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 4
-        width: 14
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 1, y: 1, z: 2, w: 1}
-      outline: []
-      tessellationDetail: 0
+    sprites: []
     outline: []
   spritePackingTag: 
   userData: 

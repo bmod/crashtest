@@ -10,6 +10,11 @@ public class UIManager : MonoBehaviour {
 	public PowerRunningOut powerRunOut;
 	public Image healthBar;
 	public Image powerBar;
+
+	public CanvasGroup healthCG;
+	public CanvasGroup powerCG;
+
+
 	float ogHealthbarWidth;
 	float ogPowerbarWidth;
 
@@ -60,25 +65,29 @@ public class UIManager : MonoBehaviour {
 		powerRunOut.OnLostPower -= UpdateBarOnPlayerLostPower;
 	}
 
+	public float blinkingThreshold = .22f;
+
 	void UpdateBarOnPlayerDamaged(int amount, DamageSource source) {
 		healthBar.rectTransform.sizeDelta = new Vector2 (playerDamageable.HealthRatio * ogHealthbarWidth, healthBar.rectTransform.sizeDelta.y);
+		CheckForHealthBlink ();
 	}
 	void UpdateBarOnPlayerHealed(int amount) {
 		healthBar.rectTransform.sizeDelta = new Vector2 (playerDamageable.HealthRatio * ogHealthbarWidth, healthBar.rectTransform.sizeDelta.y);
+		CheckForHealthBlink ();
 	}
 
 
 	void UpdateBarOnPlayerLostPower(float amount) {
 		powerBar.rectTransform.sizeDelta = new Vector2 (powerRunOut.PowerRatio * ogPowerbarWidth, powerBar.rectTransform.sizeDelta.y);
+		CheckForPowerBlink ();
 	}
 
 	void UpdateBarOnPlayerGainedPower(float amount) {
 		powerBar.rectTransform.sizeDelta = new Vector2 (powerRunOut.PowerRatio * ogPowerbarWidth, powerBar.rectTransform.sizeDelta.y);
+		CheckForPowerBlink ();
 	}
 
 	public void PresentGameOver() {
-
-
 		StartCoroutine (DelayPresentGameOverMenu());
 		MusicManager.instance.FadeMusicPitchDown ();
 	}
@@ -107,6 +116,67 @@ public class UIManager : MonoBehaviour {
 		MusicManager.instance.PlayConfirm ();
 		SceneManager.LoadScene ("SpaceMan");
 		MusicManager.instance.FadeMusicPitchUp();
+	}
+
+	bool blinkingPower = false;
+	bool blinkingHealth = false;
+
+
+	void CheckForHealthBlink() {
+		if (playerDamageable.HealthRatio < blinkingThreshold) {
+			StartBlinkingHealth ();
+		} else {
+			StopBlinkingHealth ();
+		}
+	}
+
+	void CheckForPowerBlink() {
+		if (powerRunOut.PowerRatio < blinkingThreshold) {
+			StartBlinkingPower ();
+		} else {
+			StopBlinkingPower ();
+		}
+	}
+
+	void StartBlinkingHealth() {
+		if (blinkingHealth)
+			return;
+		blinkingHealth = true;
+		StartCoroutine (BlinkHealth ());
+	}
+	void StopBlinkingHealth() {
+		blinkingHealth = false;
+	}
+	void StartBlinkingPower() {
+		if (blinkingPower)
+			return;
+		blinkingPower = true;
+		StartCoroutine (BlinkPower ());
+
+	}
+	void StopBlinkingPower() {
+		blinkingPower = false;
+	}
+	float pingPongLen = .7f;
+	IEnumerator BlinkHealth() {
+		while (blinkingHealth) {
+
+			float alphaAmend = -Mathf.PingPong (Time.time, pingPongLen);
+			Debug.Log ("alohpa amend hlth: " + alphaAmend);
+			healthCG.alpha = (1f + alphaAmend);
+			yield return null;
+		}
+		healthCG.alpha = 1f;
+	}
+
+	IEnumerator BlinkPower() {
+		while (blinkingPower) {
+			float alphaAmend = -Mathf.PingPong (Time.time, pingPongLen);
+			Debug.Log ("alohpa amend pwe: " + alphaAmend);
+			powerCG.alpha = (1f + alphaAmend);
+			yield return null;
+		}
+		powerCG.alpha = 1f;
 	}
 
 }
