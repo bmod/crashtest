@@ -9,6 +9,7 @@ public class TitleUI : MonoBehaviour {
 
 	public RectTransform instructionsWindow;
 	public RectTransform mainTitleMenu;
+	public RectTransform highScore;
 
 	public void StartGame() {
 		Debug.Log ("start clicked!");
@@ -25,6 +26,7 @@ public class TitleUI : MonoBehaviour {
 	}
 
 	public void ShowInstructions() {
+		highScore.gameObject.SetActive (false);
 		mainTitleMenu.gameObject.SetActive(false);
 		instructionsWindow.gameObject.SetActive (true);
 	}

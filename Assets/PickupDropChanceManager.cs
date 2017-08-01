@@ -6,15 +6,18 @@ using System.Linq;
 public class PickupDropChanceManager : MonoBehaviour {
 
 	public static PickupDropChanceManager instance;
+	public int score;
+
 
 	public string[] exclusionsByTag;
 
 	void Awake() {
 		if (instance != null) {
 			Destroy (this);
+
 //			Debug.LogError ("Had to destroy dup " + GetType().ToString());
 		} else {
-			
+			score = 0;
 			SetNext ();
 			instance = this;	
 		}
@@ -39,6 +42,8 @@ public class PickupDropChanceManager : MonoBehaviour {
 	}
 
 	public void PlayerShotSomethingDown(Damageable thing) {
+		score++;
+
 		if(exclusionsByTag.ToList().Contains(thing.tag)) {
 			return;
 		}

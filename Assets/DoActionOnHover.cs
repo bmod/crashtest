@@ -20,6 +20,7 @@ public class DoActionOnHover : MonoBehaviour {
 
 	public void MouseIn() {
 		text.color = hoverColor;
+		if(onHoverSound != null)
         onHoverSound.Play();
 	}
 
@@ -29,6 +30,7 @@ public class DoActionOnHover : MonoBehaviour {
 
     public void ConfirmMenuItem()
     {
+		if(onMenuConfirm != null)
         onMenuConfirm.Play();
     }
 }

@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour {
 	float ogHealthbarWidth;
 	float ogPowerbarWidth;
 
+	public Text gameOverText;
+
 	public RectTransform gameOverRoot;
 
 	// Use this for initialization
@@ -75,12 +77,21 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void PresentGameOver() {
+
+
 		StartCoroutine (DelayPresentGameOverMenu());
 		MusicManager.instance.FadeMusicPitchDown ();
 	}
 
 	public IEnumerator DelayPresentGameOverMenu() {
 		yield return new WaitForSeconds (3.3f);
+
+		if (PickupDropChanceManager.instance.score > HighScoreManager.instance.GetHighScore ()) {
+			gameOverText.text = "GAME OVER!\nNew High Score: " + PickupDropChanceManager.instance.score;
+			HighScoreManager.instance.SetHighScore (PickupDropChanceManager.instance.score);
+		} else {
+			gameOverText.text = "GAME OVER!\nYour Score: "+PickupDropChanceManager.instance.score+"\nHigh Score: " + HighScoreManager.instance.GetHighScore ();
+		}
 
 		gameOverRoot.gameObject.SetActive (true);
 		PlayerControls.instance.gameObject.SetActive (false);

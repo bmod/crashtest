@@ -51,6 +51,8 @@
      <Compile Include="Assets\FadeInOutSprite.cs" />
      <Compile Include="Assets\GenericDeathEffect.cs" />
      <Compile Include="Assets\HatcherySensor.cs" />
+     <Compile Include="Assets\HighScoreManager.cs" />
+     <Compile Include="Assets\HighScoreTitleDisplayt.cs" />
      <Compile Include="Assets\HurtPlayerOnCollision.cs" />
      <Compile Include="Assets\Instructions.cs" />
      <Compile Include="Assets\MiteDeath.cs" />
