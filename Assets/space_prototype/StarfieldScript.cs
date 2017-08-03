@@ -7,12 +7,12 @@ public class StarfieldScript : MonoBehaviour {
     public int numOfStarsLayer1 = 30;
     public int numOfStarsLayer2 = 70;
     public int numOfStarsLayer3 = 100;
-    public int starfieldHeight = 20;
-    public int starfieldWidth = 30;
-    public float layer1Speed = 0.4f;
-    public float layer2Speed = 0.03f;
-    public float layer3Speed = 0.01f;
-    public float starTimeout = 1;
+    private int starfieldHeight = 20;
+    private int starfieldWidth = 30;
+    private float layer1Speed = 0.4f;
+    private float layer2Speed = 0.03f;
+    private float layer3Speed = 0.01f;
+    private float starTimeout = 1;
     public float rangeLow = -1.0f;
     public float rangeHigh = 1.0f;
     public float starScaleMinLayer1 = 0.3f;
@@ -28,14 +28,14 @@ public class StarfieldScript : MonoBehaviour {
     private GameObject camera;
     private GameObject player;
 
-    public List<GameObject> layer1;
-    public List<GameObject> layer2;
-    public List<GameObject> layer3;
+    private List<GameObject> layer1;
+    private List<GameObject> layer2;
+    private List<GameObject> layer3;
 
-    public Rect starfieldRect;
-    public Vector3 starfieldOffset;
-    public Vector3 lastPosition;
-    public Vector3 deltaPosition;
+    private Rect starfieldRect;
+    private Vector3 starfieldOffset;
+    private Vector3 lastPosition;
+    private Vector3 deltaPosition;
 
     void Start () {
         //Get Pool
